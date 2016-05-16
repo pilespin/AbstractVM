@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:34:08 by pilespin          #+#    #+#             */
-/*   Updated: 2016/05/16 16:35:36 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/05/16 18:12:07 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 
 int main()
 {
+	char tmp;
 	int8 a(60);
+	int8 b(60);
+
+	tmp = a + b;
 
 	std::cout << "lol" << std::endl;
 	return (0);
