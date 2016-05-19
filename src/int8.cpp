@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:30:39 by pilespin          #+#    #+#             */
-/*   Updated: 2016/05/16 18:11:01 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/05/19 19:15:18 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,29 @@ int8::~int8() {
 
 }
 
-int8 &int8::operator=(int8 const &rhs) {
+char	int8::getvalue() const {	return (this->val);	}
 
-	(void)rhs;
-	return (this->val);
+int8	int8::operator+(int8 const &rhs) const{
+	return int8(this->val + rhs.getvalue());
 }
 
-int8 &int8::operator+(int8 const &rhs) {
+int8	int8::operator-(int8 const &rhs) const{
+	return int8(this->val - rhs.getvalue());
+}
 
-	if (this != &rhs)
-	{
-		this->val += rhs.val;
-	}
-	return (*this);
+int8	int8::operator*(int8 const &rhs) const{
+	return int8(this->val * rhs.getvalue());
+}
+
+int8	int8::operator/(int8 const &rhs) const{
+	return int8(this->val / rhs.getvalue());
+}
+
+int8	int8::operator%(int8 const &rhs) const{
+	return int8(this->val % rhs.getvalue());
+}
+
+std::ostream &operator<<(std::ostream &o, int8 &c) {
+	o << "value: " << (int)c.getvalue() ;
+	return (o);
 }

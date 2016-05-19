@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:30:32 by pilespin          #+#    #+#             */
-/*   Updated: 2016/05/16 18:00:44 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/05/19 19:14:57 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,17 @@ public:
 
 	int8(char val);
 
-	int8	&operator=(int8 const &rhs);
-	int8	&operator+(int8 const &rhs);
+	int8	operator+(int8 const &rhs) const;
+	int8 	operator-(int8 const &rhs) const;
+	int8 	operator*(int8 const &rhs) const;
+	int8 	operator/(int8 const &rhs) const;
+	int8 	operator%(int8 const &rhs) const;
+	char	getvalue() const ;
 
 private:
 	char val;
 };
+
+std::ostream &operator<<(std::ostream &o, int8 &c);
 
 #endif

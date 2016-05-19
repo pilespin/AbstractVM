@@ -4,6 +4,10 @@
 *.o
 *.obj
 
+# Mac OS files
+.DS_Store
+._.DS_Store
+
 # Precompiled Headers
 *.gch
 *.pch
@@ -26,3 +30,4 @@
 *.exe
 *.out
 *.app
+avm
