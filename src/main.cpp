@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:34:08 by pilespin          #+#    #+#             */
-/*   Updated: 2016/05/19 19:16:24 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/05/20 21:06:04 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,36 @@
 
 int main()
 {
-	int8 a(4);
-	int8 b(3);
-	int8 c;
+	int8 *a = new int8(4);
+	int8 *b = new int8(3);
+	int8 *c;
 
-	c = a + b;
-	std::cout << c << std::endl;
+	(void)a;
+	(void)b;
+	(void)c;
 
-	c = a - b;
-	std::cout << c << std::endl;
+	std::string *str = new std::string("Hello");
+	(void)str;
 
-	c = a * b;
-	std::cout << c << std::endl;
 
-	c = a / b;
-	std::cout << c << std::endl;
+	// int8 a(4);
+	// int8 b(3);
+	// int8 c;
+	std::cout << *a << std::endl;
 
-	c = a % b;
-	std::cout << c << std::endl;
+	// c = *a + *b;   
+	// std::cout << *c << std::endl;
+
+	// c = a - b;
+	// std::cout << c << std::endl;
+
+	// c = a * b;
+	// std::cout << c << std::endl;
+
+	// c = a / b;
+	// std::cout << c << std::endl;
+
+	// c = a % b;
+	// std::cout << c << std::endl;
 	return (0);
 }
