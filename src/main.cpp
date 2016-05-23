@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:34:08 by pilespin          #+#    #+#             */
-/*   Updated: 2016/05/19 19:16:24 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/05/23 21:09:24 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,46 @@
 
 int main()
 {
-	int8 a(4);
-	int8 b(3);
-	int8 c;
+	IOperand *a = new int8(4);
+	IOperand *b = new int8(3);
+	IOperand *c;
 
-	c = a + b;
-	std::cout << c << std::endl;
+	(void)a;
+	(void)b;
+	(void)c;
 
-	c = a - b;
-	std::cout << c << std::endl;
+	// std::string *str = new std::string("Hello");
+	// (void)str;	
 
-	c = a * b;
-	std::cout << c << std::endl;
+	// std::string *str2 = new std::string("HI THIS IS BRAIN");
+	// std::string &strref2 = *str2;
+	// (void)str2;	
+	// (void)strref2;	
 
-	c = a / b;
-	std::cout << c << std::endl;
+	// std::string str = "HI THIS IS BRAIN";
+	// std::string *strptr = &str;
+	// std::string &strref = str;
 
-	c = a % b;
-	std::cout << c << std::endl;
+	// std::cout << str << std::endl;
+	// std::cout << *strptr << std::endl;
+	// std::cout << strref << std::endl;
+
+ 
+	std::cout << *a << std::endl;
+
+	c = *a + *b;   
+	// std::cout << *c << std::endl;
+
+	// c = a - b;
+	// std::cout << c << std::endl;
+
+	// c = a * b;
+	// std::cout << c << std::endl;
+
+	// c = a / b;
+	// std::cout << c << std::endl;
+
+	// c = a % b;
+	// std::cout << c << std::endl;
 	return (0);
 }

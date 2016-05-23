@@ -6,17 +6,17 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:30:32 by pilespin          #+#    #+#             */
-/*   Updated: 2016/05/19 19:14:57 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/05/23 19:27:37 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INT8_HPP
 # define INT8_HPP
 
+#include "IOperand.hpp"
 #include <iostream>
 
-class int8
-{
+class int8 : public IOperand {
 
 public:
 	int8();
@@ -24,12 +24,15 @@ public:
 
 	int8(char val);
 
-	int8	operator+(int8 const &rhs) const;
-	int8 	operator-(int8 const &rhs) const;
-	int8 	operator*(int8 const &rhs) const;
-	int8 	operator/(int8 const &rhs) const;
-	int8 	operator%(int8 const &rhs) const;
+	IOperand 	const *operator+( IOperand const & rhs ) const;
+	// int8 	operator-(int8 const &rhs) const;
+	// int8 	operator*(int8 const &rhs) const;
+	// int8 	operator/(int8 const &rhs) const;
+	// int8 	operator%(int8 const &rhs) const;
+	std::string const &toString( void ) const;
+	// std::string	const & toString(void);
 	char	getvalue() const ;
+	// void	setvalue(char str) const;
 
 private:
 	char val;
