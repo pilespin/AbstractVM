@@ -5,13 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/16 16:30:32 by pilespin          #+#    #+#             */
-/*   Updated: 2016/05/23 21:23:13 by pilespin         ###   ########.fr       */
+/*   Created: 2016/06/10 16:01:27 by pilespin          #+#    #+#             */
+/*   Updated: 2016/06/10 16:56:09 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INT8_HPP
-# define INT8_HPP
+#pragma once
 
 #include "IOperand.hpp"
 #include <iostream>
@@ -21,23 +20,17 @@ class int8 : public IOperand {
 public:
 	int8();
 	~int8();
+	int8(int val);
+	int8(int8 const &src);
+	IOperand const *operator+(IOperand const &rhs) const;
+	int8 &operator=(int8 const &rhs);
 
-	int8(char val);
-
-	IOperand 	const *operator+( IOperand const & rhs ) const;
-	// int8 	operator-(int8 const &rhs) const;
-	// int8 	operator*(int8 const &rhs) const;
-	// int8 	operator/(int8 const &rhs) const;
-	// int8 	operator%(int8 const &rhs) const;
-	std::string const &toString( void ) const;
-	// std::string	const & toString(void);
-	char	getvalue() const ;
-	// void	setvalue(char str) const;
+	int			getValue() const;
+	void		empty();
+	// std::string	toString() const;
 
 private:
-	char val;
+	int _val;
 };
 
 std::ostream &operator<<(std::ostream &o, int8 &c);
-
-#endif
