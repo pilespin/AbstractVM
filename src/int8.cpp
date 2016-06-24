@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 16:01:27 by pilespin          #+#    #+#             */
-/*   Updated: 2016/06/24 18:37:39 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/06/24 21:54:50 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,37 +20,35 @@ int8::~int8()						{}
 
 int8::int8(int8 const &src)	{	*this = src;	}
 
-int8	&int8::operator=(int8 const &rhs) {
+// int8	*int8::operator=(int8 const *rhs) {
+
+// 	(void)rhs;
+// 	if (this != rhs)
+// 	{
+// 		this->_val = rhs->_val;
+// 	}
+// 	return (this);
+// }
+
+IOperand const *int8::operator+( IOperand const & rhs ) const {
+// int8	*int8::operator+( IOperand const & rhs ) {
 
 	(void)rhs;
-	if (this != &rhs)
-	{
-		this->_val = rhs._val;
-	}
-	return (*this);
-	// return (new &int8(5));
-}
+	// this->_val += rhs.getValue();
 
-int8 &int8::operator+( int8 const & rhs ) {
-// int8 const *int8::operator+(int8 const &rhs) const {
-
-	(void)rhs;
-	this->_val += rhs.getValue();
-	// return (new int8(this->getValue() + ((int8 &)rhs).getValue()));
 	// return (this);
-	// int8 tmp;
-	// tmp = new int8(5)
-	//return (new int8(5));
-	return (*this);
+		// return (IOperand const *) new int8(5);
+	return (reinterpret_cast<IOperand const *>(new int8(5)));
+	// return (new int8(5));
 
-	// return (new int8(this->getValue()));
 }
 
-std::ostream &operator<<(std::ostream &o, int8 &c) {
+std::ostream &operator<<(std::ostream &o, IOperand const *c) {
 	(void)c;
-	o << "int8: " << c.getValue() << " ";
+	o << "int8: " << "reinterpret_cast<int8*>(c)->getValue()" << " ";
 	return (o);
 }
+
 ///////////////////////////////////////////////////////////////////////////////
 int		int8::getValue() const	{	return (this->_val);	}
 ///////////////////////////////////////////////////////////////////////////////

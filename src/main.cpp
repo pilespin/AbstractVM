@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:34:08 by pilespin          #+#    #+#             */
-/*   Updated: 2016/06/24 18:39:35 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/06/24 21:52:37 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,14 @@
 
 int main()
 {
-	int8 *a = new int8(4);
-	int8 *b = new int8(3);
-	int8 c;
+	// int8 *a = new int8(4);
+	// int8 *b = new int8(3);
+	// IOperand *a = reinterpret_cast<IOperand *>(new int8(4));
+	// IOperand *b = reinterpret_cast<IOperand *>(new int8(3));
+	IOperand const *a = new int8(4);
+	IOperand const *b = new int8(3);
+	IOperand const *c;
+	// int8 const *c;
 
 	(void)a;
 	(void)b;
@@ -39,12 +44,17 @@ int main()
 	// std::cout << *strptr << std::endl;
 	// std::cout << strref << std::endl;
 
- 
+
 	// std::cout << *a << std::endl;
+
+		// IOperand const * c= *a + *b;
+	// c = a + b;
 
 	c = *a + *b;
 	// c = a + b;
+	// std::cout << reinterpret_cast<int8*>(c)->getValue() << std::endl;
 	std::cout << c << std::endl;
+	// std::cout << *c << std::endl;
 
 	// c = a - b;
 	// std::cout << c << std::endl;
