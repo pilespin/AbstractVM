@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 16:01:27 by pilespin          #+#    #+#             */
-/*   Updated: 2016/06/10 16:52:21 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/06/24 18:37:39 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,33 @@ int8::int8(int8 const &src)	{	*this = src;	}
 
 int8	&int8::operator=(int8 const &rhs) {
 
+	(void)rhs;
 	if (this != &rhs)
 	{
 		this->_val = rhs._val;
 	}
 	return (*this);
+	// return (new &int8(5));
 }
 
-IOperand const *int8::operator+( IOperand const & rhs ) const {
+int8 &int8::operator+( int8 const & rhs ) {
+// int8 const *int8::operator+(int8 const &rhs) const {
 
 	(void)rhs;
-	return (new int8(this->getValue() +((int8 &) rhs).getValue()));
+	this->_val += rhs.getValue();
+	// return (new int8(this->getValue() + ((int8 &)rhs).getValue()));
+	// return (this);
+	// int8 tmp;
+	// tmp = new int8(5)
+	//return (new int8(5));
+	return (*this);
+
 	// return (new int8(this->getValue()));
 }
 
 std::ostream &operator<<(std::ostream &o, int8 &c) {
 	(void)c;
-	o << "int8: " << "c.toString()" << " ";
+	o << "int8: " << c.getValue() << " ";
 	return (o);
 }
 ///////////////////////////////////////////////////////////////////////////////

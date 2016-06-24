@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:34:08 by pilespin          #+#    #+#             */
-/*   Updated: 2016/06/10 16:52:07 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/06/24 18:39:35 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int main()
 {
 	int8 *a = new int8(4);
 	int8 *b = new int8(3);
-	int8 *c;
+	int8 c;
 
 	(void)a;
 	(void)b;
@@ -40,11 +40,11 @@ int main()
 	// std::cout << strref << std::endl;
 
  
-	std::cout << *a << std::endl;
+	// std::cout << *a << std::endl;
 
-	c = *a + *b;   
-	// c = a + b;   
-	// std::cout << *c << std::endl;
+	c = *a + *b;
+	// c = a + b;
+	std::cout << c << std::endl;
 
 	// c = a - b;
 	// std::cout << c << std::endl;
