@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 16:01:27 by pilespin          #+#    #+#             */
-/*   Updated: 2016/06/24 21:27:23 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/06/25 21:12:09 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ public:
 	int8(int val);
 	int8(int8 const &src);
 	// int8	*operator=(int8 const *rhs);
-	// int8	*operator+(IOperand const &rhs);
 	IOperand const * operator+( IOperand const & rhs ) const;
-	// int8 const *operator+(int8 const &rhs) const;
+	std::string const & toString( void ) const;
 
 	int			getValue() const;
 	void		empty();
@@ -33,6 +32,8 @@ public:
 
 private:
 	int _val;
+	int _type;
+	int _precision;
 };
 
 std::ostream &operator<<(std::ostream &o, IOperand const *c);

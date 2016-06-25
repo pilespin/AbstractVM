@@ -6,13 +6,17 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 16:01:27 by pilespin          #+#    #+#             */
-/*   Updated: 2016/06/24 21:54:50 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/06/25 22:12:40 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "int8.hpp"
 
-int8::int8() 						{	this->_val = 0;	}
+int8::int8() {	
+	this->_val = 0;	
+	this->_type = TYPE_INT8;
+	this->_precision = TYPE_INT8;
+}
 
 int8::int8(int val) 				{	this->_val = val;	}
 
@@ -30,11 +34,25 @@ int8::int8(int8 const &src)	{	*this = src;	}
 // 	return (this);
 // }
 
+std::string const & int8::toString( void ) const {
+
+	std::string const *str = new std::string("foo");
+	std::string const &ref = *str;
+
+	return(ref);
+}
+
 IOperand const *int8::operator+( IOperand const & rhs ) const {
 // int8	*int8::operator+( IOperand const & rhs ) {
 
 	(void)rhs;
+	// int8 tmp;
+
+	// tmp = reinterpret_cast<int8 const>(rhs);
+	// tmp = reinterpret_cast<int8 const>(rhs);
 	// this->_val += rhs.getValue();
+
+	// std::cout << (int8)(rhs).toString() << std::endl;
 
 	// return (this);
 		// return (IOperand const *) new int8(5);
@@ -45,7 +63,8 @@ IOperand const *int8::operator+( IOperand const & rhs ) const {
 
 std::ostream &operator<<(std::ostream &o, IOperand const *c) {
 	(void)c;
-	o << "int8: " << "reinterpret_cast<int8*>(c)->getValue()" << " ";
+
+	o << "int8: " << reinterpret_cast<int8 const *>(c)->getValue() << " ";
 	return (o);
 }
 

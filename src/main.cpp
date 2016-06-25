@@ -6,12 +6,18 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:34:08 by pilespin          #+#    #+#             */
-/*   Updated: 2016/06/24 21:52:37 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/06/25 21:57:24 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <project.hpp>
 #include "int8.hpp"
+
+#define TYPE_INT8 	1
+#define TYPE_INT16 	2
+#define TYPE_INT32 	3
+#define TYPE_FLOAT 	4
+#define TYPE_DOUBLE 5
 
 int main()
 {
@@ -27,6 +33,14 @@ int main()
 	(void)a;
 	(void)b;
 	(void)c;
+
+	// std::string const test = std::string("String test");
+	// std::string const &ref = test;
+
+	// // std::string &t = *test;	
+	// std::cout << test << std::endl;
+	// std::cout << ref << std::endl;
+	// std::cout << t << std::endl;
 
 	// std::string *str = new std::string("Hello");
 	// (void)str;	
