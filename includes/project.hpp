@@ -13,6 +13,13 @@
 #ifndef PROJECT_H
 # define PROJECT_H
 
+#define TYPE_INT8 	1
+#define TYPE_INT16 	2
+#define TYPE_INT32 	3
+#define TYPE_FLOAT 	4
+#define TYPE_DOUBLE 5
+
 #include <iostream>
+#include <cstdlib>
 
 #endif

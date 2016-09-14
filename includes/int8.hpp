@@ -13,14 +13,13 @@
 #pragma once
 
 #include "IOperand.hpp"
-#include <iostream>
 
 class int8 : public IOperand{
 
 public:
 	int8();
 	~int8();
-	int8(int val);
+	int8(int8_t val);
 	int8(int8 const &src);
 	// int8	*operator=(int8 const *rhs);
 	IOperand const * operator+( IOperand const & rhs ) const;
@@ -30,10 +29,24 @@ public:
 	void		empty();
 	// std::string	toString() const;
 
+	class Overflow : public std::exception {
+	public:
+		virtual const char *what() const throw() {
+			return ("Overflow");
+		}
+	};
+
+	class Underflow : public std::exception {
+	public:
+		virtual const char *what() const throw() {
+			return ("Underflow");
+		}
+	};
+
 private:
-	int _val;
-	int _type;
-	int _precision;
+	int8_t _val;
+	int8_t _type;
+	int8_t _precision;
 };
 
 std::ostream &operator<<(std::ostream &o, IOperand const *c);

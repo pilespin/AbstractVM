@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 16:01:27 by pilespin          #+#    #+#             */
-/*   Updated: 2016/06/25 22:12:40 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/09/14 15:54:50 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int8::int8() {
 	this->_precision = TYPE_INT8;
 }
 
-int8::int8(int val) 				{	this->_val = val;	}
+int8::int8(int8_t val) 				{	this->_val = val;	}
 
 int8::~int8()						{}
 
@@ -36,35 +36,31 @@ int8::int8(int8 const &src)	{	*this = src;	}
 
 std::string const & int8::toString( void ) const {
 
-	std::string const *str = new std::string("foo");
+	std::string const *str = new std::string(std::to_string(this->getValue()));
 	std::string const &ref = *str;
 
 	return(ref);
 }
 
 IOperand const *int8::operator+( IOperand const & rhs ) const {
-// int8	*int8::operator+( IOperand const & rhs ) {
-
 	(void)rhs;
-	// int8 tmp;
 
-	// tmp = reinterpret_cast<int8 const>(rhs);
-	// tmp = reinterpret_cast<int8 const>(rhs);
-	// this->_val += rhs.getValue();
+	int8_t right = std::atoi(rhs.toString().c_str());
+	int8_t left = this->getValue();
 
-	// std::cout << (int8)(rhs).toString() << std::endl;
+	if (left + right > INT8_MAX)
+		throw Overflow();
+	else if ((left + right) < INT8_MIN)
+		throw Underflow();
 
-	// return (this);
-		// return (IOperand const *) new int8(5);
-	return (reinterpret_cast<IOperand const *>(new int8(5)));
-	// return (new int8(5));
-
+	return (new int8(left + right));
 }
 
 std::ostream &operator<<(std::ostream &o, IOperand const *c) {
 	(void)c;
 
-	o << "int8: " << reinterpret_cast<int8 const *>(c)->getValue() << " ";
+	// o << "int8: " << reinterpret_cast<int8 const *>(c)->getValue() << " ";
+	o << "int8: " << c->toString() << " ";
 	return (o);
 }
 
