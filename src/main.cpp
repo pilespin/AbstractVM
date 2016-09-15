@@ -16,10 +16,23 @@
 int main()
 {
 
-	IOperand const *a = new int8(127);
+	IOperand const *a = new int8(126);
 	IOperand const *b = new int8(1);
 	IOperand const *c;
 	// int8 const *c;
+
+	enum class eOperandType {Int8, Int16, Int32, Float, Double};
+
+	eOperandType io;
+	(void)io;
+
+	io = eOperandType::Int8;
+
+	std::cout << static_cast<int>(eOperandType::Int8) << std::endl;
+	std::cout << static_cast<int>(eOperandType::Int16) << std::endl;
+	std::cout << static_cast<int>(eOperandType::Int32) << std::endl;
+	std::cout << static_cast<int>(eOperandType::Float) << std::endl;
+	std::cout << static_cast<int>(eOperandType::Double) << std::endl;
 
 	(void)a;
 	(void)b;
