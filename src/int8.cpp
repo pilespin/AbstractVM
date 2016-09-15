@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 16:01:27 by pilespin          #+#    #+#             */
-/*   Updated: 2016/09/14 15:54:50 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/09/15 18:57:37 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int8::int8() {
 	this->_precision = TYPE_INT8;
 }
 
-int8::int8(int8_t val) 				{	this->_val = val;	}
+int8::int8(int8_t val) {
+
+		this->_val = val;
+}
 
 int8::~int8()						{}
 

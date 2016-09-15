@@ -6,9 +6,11 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/20 10:34:00 by pilespin          #+#    #+#             */
-/*   Updated: 2016/06/25 20:42:19 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/09/15 18:27:54 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#pragma once
 
 #include <project.hpp>
 
@@ -22,7 +24,5 @@ public:
 	// virtual IOperand const * operator/( IOperand const & rhs ) const = 0; // Quotient
 	// virtual IOperand const * operator%( IOperand const & rhs ) const = 0; // Modulo
 	virtual std::string const & toString( void ) const = 0; // String representation of the instance
-	// virtual ~IOperand( void ) {}
-
-	// int8	*operator+(int8 const &rhs) const;
+	virtual ~IOperand( void ) {}
 };
