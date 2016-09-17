@@ -13,14 +13,16 @@
 #include <project.hpp>
 #include "Factory.hpp"
 #include "int8.hpp"
+#include "TNumber.hpp"
 
 int main()
 {
 	try
 	{
-		IOperand const *a = new int8(126);
-		IOperand const *b = new int8(1);
-		IOperand const *c;
+		// IOperand const *a = new NumberType<int8_t>(static_cast<int8_t>(126));
+		// IOperand const *b = new NumberType<int8_t>(static_cast<int8_t>(1));
+		// IOperand const *a = new int8(126);
+		// IOperand const *b = new int8(1);
 	// int8 const *c;
 
 	// eOperandType io;
@@ -29,7 +31,11 @@ int main()
 
 		Factory factory = Factory();
 		(void)factory;
+		std::cout << factory << std::endl;
 
+		IOperand const *a = factory.createOperand(eOperandType::Int8, "126");
+		IOperand const *b = factory.createOperand(eOperandType::Int8, "1");
+		IOperand const *c;
 		IOperand const *d = factory.createOperand(eOperandType::Int8, "120");
 		(void)d;
 		std::cout << "Test1: " << d << std::endl;
@@ -52,8 +58,6 @@ int main()
 		(void)b;
 		(void)c;
 
-
-
 		c = *a + *b;
 	// c = a + b;
 	// std::cout << reinterpret_cast<int8*>(c)->getValue() << std::endl;
@@ -64,6 +68,17 @@ int main()
 	{
 		std::cout << e.what() << std::endl;
 	}
+
+////////////////////////////////////////////////////////////////////////
+
+	// IOperand const *e;
+	// NumberType<int> cr;
+
+	// uint16_t val = 15;
+	// uint16_t ret = cr.create(val);
+
+	// std::cout << val << std::endl;
+	// std::cout << ret << std::endl;
 
 	return (0);
 }

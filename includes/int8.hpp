@@ -10,43 +10,43 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+// #pragma once
 
-#include "IOperand.hpp"
+// #include "IOperand.hpp"
 
-class int8 : public IOperand{
+// class int8 : public IOperand {
 
-public:
-	int8();
-	~int8();
-	int8(int8_t val);
-	int8(int8 const &src);
-	// int8	*operator=(int8 const *rhs);
-	IOperand const * operator+( IOperand const & rhs ) const;
-	std::string const & toString( void ) const;
+// public:
+// 	int8();
+// 	~int8();
+// 	int8(int8_t val);
+// 	int8(int8 const &src);
+// 	// int8	*operator=(int8 const *rhs);
+// 	IOperand const * operator+( IOperand const & rhs ) const;
+// 	std::string const & toString( void ) const;
 
-	int			getValue() const;
-	void		empty();
-	// std::string	toString() const;
+// 	int			getValue() const;
+// 	void		empty();
+// 	// std::string	toString() const;
 
-	class Overflow : public std::exception {
-	public:
-		virtual const char *what() const throw() {
-			return ("Overflow");
-		}
-	};
+// 	class Overflow : public std::exception {
+// 	public:
+// 		virtual const char *what() const throw() {
+// 			return ("Overflow");
+// 		}
+// 	};
 
-	class Underflow : public std::exception {
-	public:
-		virtual const char *what() const throw() {
-			return ("Underflow");
-		}
-	};
+// 	class Underflow : public std::exception {
+// 	public:
+// 		virtual const char *what() const throw() {
+// 			return ("Underflow");
+// 		}
+// 	};
 
-private:
-	int8_t _val;
-	int8_t _type;
-	int8_t _precision;
-};
+// private:
+// 	int8_t _val;
+// // 	int8_t _type;
+// // 	int8_t _precision;
+// };
 
-std::ostream &operator<<(std::ostream &o, IOperand const *c);
+// std::ostream &operator<<(std::ostream &o, IOperand const *c);

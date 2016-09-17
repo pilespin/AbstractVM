@@ -1,0 +1,7 @@
+[3;J[H[2Jmake[1]: Entering directory '/home/hello/Desktop/rendu/abstractvm'
+[32m compiling avm >>> make[2]: Entering directory '/home/hello/Desktop/rendu/abstractvm'
+Makefile:49: recipe for target 'obj/Factory.o' failed
+make[2]: Leaving directory '/home/hello/Desktop/rendu/abstractvm'
+Makefile:40: recipe for target 'compil' failed
+make[1]: Leaving directory '/home/hello/Desktop/rendu/abstractvm'
+Makefile:64: recipe for target 'run' failed

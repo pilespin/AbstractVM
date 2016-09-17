@@ -63,6 +63,7 @@ re: fclean all
 run:
 	@clear
 	@make
+	@echo "\033[36m----------------------------- \033[0m"
 	@./$(NAME)
 
 leaks:

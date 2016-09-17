@@ -12,7 +12,8 @@
 
 #include "Factory.hpp"
 #include "IOperand.hpp"
-#include "int8.hpp"
+#include "TNumber.hpp"
+// #include "int8.hpp"
 
 Factory::Factory() 						{}
 
@@ -30,9 +31,12 @@ Factory	&Factory::operator=(Factory const &rhs) {
 }
 
 std::ostream &operator<<(std::ostream &o, Factory &c) {
-	o << "Factory: " << c.getValue() << " ";
+	(void)c;
+	// o << "Factory: " << c.getValue() << " ";
+	o << "Factory: " << "I'm a Factory";
 	return (o);
 }
+
 ///////////////////////////////////////////////////////////////////////////////
 int		Factory::getValue() const	{	return (this->_val);	}
 ///////////////////////////////////////////////////////////////////////////////
@@ -57,7 +61,8 @@ IOperand const *Factory::createInt8( std::string const & value ) const {
 	else if (val < INT8_MIN)
 		throw ValueTooLow();
 
-	return (new int8(val));
+	// return (new int8(val));
+	return (new NumberType<int8_t>(static_cast<int8_t>(val)));
 
 }
 
