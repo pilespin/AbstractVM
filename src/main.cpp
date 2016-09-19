@@ -14,6 +14,7 @@
 #include "Factory.hpp"
 #include "int8.hpp"
 #include "TNumber.hpp"
+#include <typeinfo>
 
 int main()
 {
@@ -33,10 +34,10 @@ int main()
 		(void)factory;
 		std::cout << factory << std::endl;
 
-		IOperand const *a = factory.createOperand(eOperandType::Int8, "126");
-		IOperand const *b = factory.createOperand(eOperandType::Int8, "1");
+		IOperand const *a = factory.createOperand(eOperandType::Int16, "32766");
+		IOperand const *b = factory.createOperand(eOperandType::Int16, "2");
 		IOperand const *c;
-		IOperand const *d = factory.createOperand(eOperandType::Int8, "120");
+		IOperand const *d = factory.createOperand(eOperandType::Int16, "120");
 		(void)d;
 		std::cout << "Test1: " << d << std::endl;
 
@@ -79,6 +80,16 @@ int main()
 
 	// std::cout << val << std::endl;
 	// std::cout << ret << std::endl;
+	uint8_t k;
+	std::cout << typeid(k).name() << std::endl;
+		uint16_t l;
+	std::cout << typeid(l).name() << std::endl;
+		uint32_t m;
+	std::cout << typeid(m).name() << std::endl;
+		float n;
+	std::cout << typeid(n).name() << std::endl;
+		double o;
+	std::cout << typeid(o).name() << std::endl;
 
 	return (0);
 }

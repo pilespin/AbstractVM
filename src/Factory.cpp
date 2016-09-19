@@ -21,14 +21,14 @@ Factory::~Factory()						{}
 
 Factory::Factory(Factory const &src)	{	*this = src;	}
 
-Factory	&Factory::operator=(Factory const &rhs) {
+// Factory	&Factory::operator=(Factory const &rhs) {
 
-	if (this != &rhs)
-	{
-		this->_val = rhs._val;
-	}
-	return (*this);
-}
+// 	if (this != &rhs)
+// 	{
+// 		this->_val = rhs._val;
+// 	}
+// 	return (*this);
+// }
 
 std::ostream &operator<<(std::ostream &o, Factory &c) {
 	(void)c;
@@ -38,7 +38,7 @@ std::ostream &operator<<(std::ostream &o, Factory &c) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-int		Factory::getValue() const	{	return (this->_val);	}
+// int		Factory::getValue() const	{	return (this->_val);	}
 ///////////////////////////////////////////////////////////////////////////////
 
 IOperand const *Factory::createOperand( eOperandType type, std::string const & value ) const {
@@ -47,9 +47,10 @@ IOperand const *Factory::createOperand( eOperandType type, std::string const & v
 
 	if (type == eOperandType::Int8)
 		return (this->createInt8(value));
+	else if (type == eOperandType::Int16)
+		return (this->createInt16(value));
 	else
 		throw BadOperand();
-
 }
 
 IOperand const *Factory::createInt8( std::string const & value ) const {
@@ -61,9 +62,19 @@ IOperand const *Factory::createInt8( std::string const & value ) const {
 	else if (val < INT8_MIN)
 		throw ValueTooLow();
 
-	// return (new int8(val));
 	return (new NumberType<int8_t>(static_cast<int8_t>(val)));
+}
 
+IOperand const *Factory::createInt16( std::string const & value ) const {
+
+	double val = std::atof(value.c_str());
+
+	if (val > INT16_MAX)
+		throw ValueTooHigh();
+	else if (val < INT16_MIN)
+		throw ValueTooLow();
+
+	return (new NumberType<int16_t>(static_cast<int16_t>(val)));
 }
 
 void	Factory::empty() {

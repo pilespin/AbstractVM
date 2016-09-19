@@ -20,11 +20,11 @@ public:
 	Factory();
 	~Factory();
 	Factory(Factory const &src);
-	Factory &operator=(Factory const &rhs);
+	// Factory &operator=(Factory const &rhs);
 
 	IOperand const *createOperand( eOperandType type, std::string const & value ) const;
 
-	int			getValue() const;
+	// int			getValue() const;
 	void		empty();
 
 	class ValueTooHigh : public std::exception {
@@ -49,11 +49,9 @@ public:
 	};
 
 private:
-
-	int _val;
-
+	// int _val;
 	IOperand const * createInt8( std::string const & value ) const;
-	// IOperand const * createInt16( std::string const & value ) const;
+	IOperand const * createInt16( std::string const & value ) const;
 	// IOperand const * createInt32( std::string const & value ) const;
 	// IOperand const * createFloat( std::string const & value ) const;
 	// IOperand const * createDouble( std::string const & value ) const;

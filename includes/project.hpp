@@ -16,3 +16,4 @@ enum class eOperandType {Int8, Int16, Int32, Float, Double};
 
 #include <iostream>
 #include <cstdlib>
+#include <typeinfo>
