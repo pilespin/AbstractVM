@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:34:08 by pilespin          #+#    #+#             */
-/*   Updated: 2016/09/15 19:30:26 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/09/26 17:12:17 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main()
 		(void)factory;
 		std::cout << factory << std::endl;
 
-		IOperand const *a = factory.createOperand(eOperandType::Int16, "32766");
+		IOperand const *a = factory.createOperand(eOperandType::Int16, "32760");
 		IOperand const *b = factory.createOperand(eOperandType::Int16, "2");
 		IOperand const *c;
 		IOperand const *d = factory.createOperand(eOperandType::Int16, "120");
@@ -80,16 +80,16 @@ int main()
 
 	// std::cout << val << std::endl;
 	// std::cout << ret << std::endl;
-	uint8_t k;
-	std::cout << typeid(k).name() << std::endl;
-		uint16_t l;
-	std::cout << typeid(l).name() << std::endl;
-		uint32_t m;
-	std::cout << typeid(m).name() << std::endl;
-		float n;
-	std::cout << typeid(n).name() << std::endl;
-		double o;
-	std::cout << typeid(o).name() << std::endl;
+	// uint8_t k;
+	// std::cout << typeid(k).name() << std::endl;
+	// 	uint16_t l;
+	// std::cout << typeid(l).name() << std::endl;
+	// 	uint32_t m;
+	// std::cout << typeid(m).name() << std::endl;
+	// 	float n;
+	// std::cout << typeid(n).name() << std::endl;
+	// 	double o;
+	// std::cout << typeid(o).name() << std::endl;
 
 	return (0);
 }
