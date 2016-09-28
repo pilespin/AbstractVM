@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/15 17:44:48 by pilespin          #+#    #+#             */
-/*   Updated: 2016/09/15 19:28:44 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/09/28 19:25:59 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ private:
 	// int _val;
 	IOperand const * createInt8( std::string const & value ) const;
 	IOperand const * createInt16( std::string const & value ) const;
-	// IOperand const * createInt32( std::string const & value ) const;
-	// IOperand const * createFloat( std::string const & value ) const;
-	// IOperand const * createDouble( std::string const & value ) const;
+	IOperand const * createInt32( std::string const & value ) const;
+	IOperand const * createFloat( std::string const & value ) const;
+	IOperand const * createDouble( std::string const & value ) const;
 };
 
 std::ostream &operator<<(std::ostream &o, Factory &c);

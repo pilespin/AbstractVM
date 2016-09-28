@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/26 16:18:12 by pilespin          #+#    #+#             */
-/*   Updated: 2016/09/28 13:20:55 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/09/28 18:59:45 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ public:
 	~NumberType();
 
 	T 					getValue() const;
-	T 					getMaxValueOfType(T value);
+	double				getMaxValueOfPrecision( int precision ) const;
+	double				getMinValueOfPrecision( int precision ) const;
+	int					getMinimumPrecision( IOperand const &value ) const;
 
 	int 				getPrecision() const;
 	eOperandType 		getType( void ) const;
@@ -59,10 +61,8 @@ public:
 		}
 	};
 
-    // T create (T const& val);
 private:
-	T 				_val;
-	// eOperandType	io;
+	T _val;
 
 };
 
@@ -136,45 +136,72 @@ template <class T>
 IOperand const *NumberType<T>::operator+( IOperand const & rhs ) const {
 	(void)rhs;
 
-	T right = std::atof(rhs.toString().c_str());
-	T left = this->getValue();
+	T 	right 		= std::atof(rhs.toString().c_str());
+	T 	left 		= this->getValue();
+	int	precision 	= this->getMinimumPrecision(rhs);
 
-	// T test = this->getMaxValueOfType(left);
-	// (void)test;
-	// std::cout << "Max value: " << this->getMaxValueOfType(left) << std::endl;
+	if (left + right > this->getMaxValueOfPrecision(precision))
+		throw Overflow();
+	else if ((left + right) < this->getMinValueOfPrecision(precision))
+		throw Underflow();
 
-	// T lol = this->getMaxValueOfType(left);
-	// if (left + right > INT8_MAX)
-	// 	throw Overflow();
-	// else if ((left + right) < INT8_MIN)
-	// 	throw Underflow();
+	if (precision == PRECISION_INT8)
+		return (new NumberType<int8_t>(left + right));
+	else if (precision == PRECISION_INT16)
+		return (new NumberType<int16_t>(left + right));
+	else if (precision == PRECISION_INT32)
+		return (new NumberType<int32_t>(left + right));
+	else if (precision == PRECISION_FLT)
+		return (new NumberType<float>(left + right));
+	else if (precision == PRECISION_DBL)
+		return (new NumberType<double>(left + right));
+	else
+		throw WTF();
 
-	return (new NumberType<T>(left + right));
 }
 
-// uint8_t 	== "h";
-// uint16_t 	== "t";
-// uint32_t 	== "j";
-// float 		== "f";
-// double 		== "d";
+template <class T>
+int NumberType<T>::getMinimumPrecision( IOperand const &value) const {
 
-// template <class T>
-// T NumberType<T>::getMaxValueOfType(T value) {
+	int left 	= this->getPrecision();
+	int right 	= value.getPrecision();
 
-// 	std::string id = typeid(value).name();
+	if (left > right)
+		return (left);
+	else
+		return (right);
+}
 
-// 	return(42);
-// 	// if (id.compare("h"))
-// 	// 	return (INT8_MAX);
-// 	// else if (id.compare("t"))
-// 	// 	return (INT16_MAX);
-// 	// else if (id.compare("j"))
-// 	// 	return (INT32_MAX);
-// 	// // else if (id.compare("f"))
-// 	// // 	return (FLOAT_MAX);
-// 	// // else if (id.compare("d"))
-// 	// // 	return (DOUBLE_MAX);
-// 	// else
-// 	// 	throw BadType();
-// 	// return (0);
-// }
+template <class T>
+double NumberType<T>::getMaxValueOfPrecision( int precision) const {
+
+	if (precision == PRECISION_INT8)
+		return (INT8_MAX);
+	else if (precision == PRECISION_INT16)
+		return (INT16_MAX);
+	else if (precision == PRECISION_INT32)
+		return (INT32_MAX);
+	else if (precision == PRECISION_FLT)
+		return (FLT_MAX);
+	else if (precision == PRECISION_DBL)
+		return (DBL_MAX);
+	else
+		throw BadType();
+}
+
+template <class T>
+double NumberType<T>::getMinValueOfPrecision( int precision) const {
+
+	if (precision == PRECISION_INT8)
+		return (INT8_MIN);
+	else if (precision == PRECISION_INT16)
+		return (INT16_MIN);
+	else if (precision == PRECISION_INT32)
+		return (INT32_MIN);
+	else if (precision == PRECISION_FLT)
+		return (FLT_MIN);
+	else if (precision == PRECISION_DBL)
+		return (DBL_MIN);
+	else
+		throw BadType();
+}
