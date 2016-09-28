@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/26 16:18:12 by pilespin          #+#    #+#             */
-/*   Updated: 2016/09/26 17:58:53 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/09/28 13:20:55 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ public:
 	T 					getMaxValueOfType(T value);
 
 	int 				getPrecision() const;
-	eOperandType 		getType( void );
-	// eOperandType 		getType();
+	eOperandType 		getType( void ) const;
 	IOperand const 		*operator+( IOperand const & rhs ) const;
 	std::string const 	&toString( void ) const;
 
@@ -53,9 +52,17 @@ public:
 		}
 	};
 
+	class WTF : public std::exception {
+	public:
+		virtual const char *what() const throw() {
+			return ("W.T.F !!!");
+		}
+	};
+
     // T create (T const& val);
 private:
-	T _val;
+	T 				_val;
+	// eOperandType	io;
 
 };
 
@@ -89,30 +96,31 @@ NumberType<T>::~NumberType() 		{}
 
 ///////////////////////////////////////////////////////////////////////////////
 
-// template <class T>
-// int NumberType<T>::getPrecision() {
-// 	int i = 42;
-// 	return (i);
-// }
-
-// template <class T>
-// eOperandType NumberType<T>::getType( void ) {
-// 	return (eOperandType::Int8);
-// }
-
 template <class T>
 int  NumberType<T>::getPrecision( void ) const {
 
-	int i = 10;
-	return(i);
+	eOperandType io = this->getType();
+	return(static_cast<int>(io));
 }
 
 template <class T>
-eOperandType  NumberType<T>::getType( void ) {
+eOperandType  NumberType<T>::getType( void ) const {
 
-	eOperandType io;
-	io = eOperandType::Int8;
-	return(io);
+	T value = this->getValue();
+	std::string id = typeid(value).name();
+
+	if (!id.compare("a"))
+		return (eOperandType::Int8);
+	else if (!id.compare("s"))
+		return (eOperandType::Int16);
+	else if (!id.compare("i"))
+		return (eOperandType::Int32);
+	else if (!id.compare("f"))
+		return (eOperandType::Float);
+	else if (!id.compare("d"))
+		return (eOperandType::Double);
+	else
+		throw WTF();
 }
 
 template <class T>
