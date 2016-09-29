@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/15 17:44:48 by pilespin          #+#    #+#             */
-/*   Updated: 2016/09/28 20:09:25 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/09/29 14:54:21 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,17 +99,9 @@ IOperand const *Factory::createFloat( std::string const & value ) const {
 
 	double val = std::atof(value.c_str());
 
-	float tmp_float_max = FLT_MAX;
-	float tmp_float_min = FLT_MIN;
-
-	std::cout << "valuetest: " << val << std::endl;
-	std::cout << "value max: " << tmp_float_max << std::endl;
-	std::cout << "value min: " << tmp_float_min << std::endl;
-
-
-	if (val > tmp_float_max)
+	if (val > std::numeric_limits<float>::max())
 		throw ValueTooHigh();
-	else if (val < tmp_float_min)
+	else if (val < std::numeric_limits<float>::lowest())
 		throw ValueTooLow();
 
 	return (new NumberType<float>(static_cast<float>(val)));
@@ -119,11 +111,9 @@ IOperand const *Factory::createDouble( std::string const & value ) const {
 
 	double val = std::atof(value.c_str());
 
-	std::cout << "valutest: " << val << std::endl;
-
-	if (val > DBL_MAX)
+	if (val > std::numeric_limits<double>::max())
 		throw ValueTooHigh();
-	else if (val < DBL_MIN)
+	else if (val < std::numeric_limits<double>::lowest())
 		throw ValueTooLow();
 
 	return (new NumberType<double>(static_cast<double>(val)));

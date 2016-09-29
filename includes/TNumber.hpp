@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/26 16:18:12 by pilespin          #+#    #+#             */
-/*   Updated: 2016/09/28 18:59:45 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/09/29 16:41:25 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ public:
 		}
 	};
 
+// std::ostream &operator<<(std::ostream &o, IOperand const *c);
+
 private:
 	T _val;
 
@@ -71,14 +73,14 @@ private:
 
 // std::ostream &operator<<(std::ostream &o, IOperand const *c);
 
-template <class T>
-std::ostream &operator<<(std::ostream &o, IOperand const *c) {
-	(void)c;
+// template <class T>
+// std::ostream &operator<<(std::ostream &o, IOperand const *c) {
+// 	(void)c;
 
-	// o << "int8: " << reinterpret_cast<int8 const *>(c)->getValue() << " ";
-	o << "int8: " << c->toString() << " ";
-	return (o);
-}
+// 	// o << "int8: " << reinterpret_cast<int8 const *>(c)->getValue() << " ";
+// 	o << "int8: " << c->toString() << " lolol";
+// 	return (o);
+// }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <class T>
@@ -136,11 +138,14 @@ template <class T>
 IOperand const *NumberType<T>::operator+( IOperand const & rhs ) const {
 	(void)rhs;
 
-	T 	right 		= std::atof(rhs.toString().c_str());
-	T 	left 		= this->getValue();
+
+	std::string::size_type sz;
+
+	long double right 	= std::stof(rhs.toString(), &sz);
+	long double 	left 	= this->getValue();
 	int	precision 	= this->getMinimumPrecision(rhs);
 
-	if (left + right > this->getMaxValueOfPrecision(precision))
+	if ((left + right) > this->getMaxValueOfPrecision(precision))
 		throw Overflow();
 	else if ((left + right) < this->getMinValueOfPrecision(precision))
 		throw Underflow();
@@ -199,9 +204,9 @@ double NumberType<T>::getMinValueOfPrecision( int precision) const {
 	else if (precision == PRECISION_INT32)
 		return (INT32_MIN);
 	else if (precision == PRECISION_FLT)
-		return (FLT_MIN);
+		return (-FLT_MAX);
 	else if (precision == PRECISION_DBL)
-		return (DBL_MIN);
+		return (-DBL_MAX);
 	else
 		throw BadType();
 }
