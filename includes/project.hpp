@@ -6,18 +6,19 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/15 18:48:50 by pilespin          #+#    #+#             */
-/*   Updated: 2016/09/28 18:50:53 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/09/30 16:06:34 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-enum class eOperandType {Int8, Int16, Int32, Float, Double};
+enum eOperandType {Int8, Int16, Int32, Float, Double};
 
 #include <iostream>
 #include <cstdlib>
 #include <typeinfo>
 #include <cfloat>
+#include <vector>
 
 #define PRECISION_INT8 	static_cast<int>(eOperandType::Int8)
 #define PRECISION_INT16 static_cast<int>(eOperandType::Int16)

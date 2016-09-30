@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/15 17:44:48 by pilespin          #+#    #+#             */
-/*   Updated: 2016/09/28 19:25:59 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/09/30 18:27:58 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ public:
 
 	IOperand const *createOperand( eOperandType type, std::string const & value ) const;
 
-	// int			getValue() const;
 	void		empty();
 
 	class ValueTooHigh : public std::exception {
@@ -41,15 +40,19 @@ public:
 		}
 	};
 
-	class BadOperand : public std::exception {
-	public:
-		virtual const char *what() const throw() {
-			return ("Bad Operande");
-		}
-	};
+	// class BadOperand : public std::exception {
+	// public:
+	// 	virtual const char *what() const throw() {
+	// 		return ("Bad Operande");
+	// 	}
+	// };
 
 private:
-	// int _val;
+	// std::vector<IOperand const *> v;
+	// typedef	IOperand const * (Factory::*fct)( std::string const & ) const;
+	std::vector<IOperand const * (Factory::*)( std::string const & ) const> fct_create;
+	// std::vector<fct> fct_create;
+	
 	IOperand const * createInt8( std::string const & value ) const;
 	IOperand const * createInt16( std::string const & value ) const;
 	IOperand const * createInt32( std::string const & value ) const;

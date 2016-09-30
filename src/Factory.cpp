@@ -6,16 +6,21 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/15 17:44:48 by pilespin          #+#    #+#             */
-/*   Updated: 2016/09/29 14:54:21 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/09/30 18:28:00 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Factory.hpp"
 #include "IOperand.hpp"
 #include "TNumber.hpp"
-// #include "int8.hpp"
 
-Factory::Factory() 						{}
+Factory::Factory() 						{
+	this->fct_create.push_back(&Factory::createInt8);
+	this->fct_create.push_back(&Factory::createInt16);
+	this->fct_create.push_back(&Factory::createInt32);
+	this->fct_create.push_back(&Factory::createFloat);
+	this->fct_create.push_back(&Factory::createDouble);
+}
 
 Factory::~Factory()						{}
 
@@ -32,7 +37,6 @@ Factory::Factory(Factory const &src)	{	*this = src;	}
 
 std::ostream &operator<<(std::ostream &o, Factory &c) {
 	(void)c;
-	// o << "Factory: " << c.getValue() << " ";
 	o << "Factory: " << "I'm a Factory";
 	return (o);
 }
@@ -45,18 +49,25 @@ IOperand const *Factory::createOperand( eOperandType type, std::string const & v
 	(void)value;
 	(void)type;
 
-	if (type == eOperandType::Int8)
-		return (this->createInt8(value));
-	else if (type == eOperandType::Int16)
-		return (this->createInt16(value));
-	else if (type == eOperandType::Int32)
-		return (this->createInt32(value));
-	else if (type == eOperandType::Float)
-		return (this->createFloat(value));
-	else if (type == eOperandType::Double)
-		return (this->createDouble(value));
-	else
-		throw BadOperand();
+	int precision = static_cast<int>(type);
+
+	return( (this->*(fct_create[precision]))(value) );
+
+	// if (type == eOperandType::Int8)
+	// {
+	// 	// return( (this->*(fct_create[0]))(value) );
+	// 	return (this->createInt8(value));
+	// }
+	// else if (type == eOperandType::Int16)
+	// 	return (this->createInt16(value));
+	// else if (type == eOperandType::Int32)
+	// 	return (this->createInt32(value));
+	// else if (type == eOperandType::Float)
+	// 	return (this->createFloat(value));
+	// else if (type == eOperandType::Double)
+	// 	return (this->createDouble(value));
+	// else
+	// 	throw BadOperand();
 }
 
 IOperand const *Factory::createInt8( std::string const & value ) const {
