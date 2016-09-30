@@ -13,6 +13,7 @@
 #include <project.hpp>
 #include "Factory.hpp"
 #include "TNumber.hpp"
+#include "Stack.hpp"
 #include <sstream>
 
 #include <cmath>
@@ -73,6 +74,19 @@ void ft_test_add()
 int main()
 {
 	ft_test_add();
+
+	Stack s = Stack();
+	(void)s;
+
+	Factory factory = Factory();
+	IOperand const *one = factory.createOperand(eOperandType::Double, "50");
+	IOperand const *two = factory.createOperand(eOperandType::Double, "100");
+
+	s.push(one);
+	s.push(two);
+
+	s.dump();
+
 
 	// float fl = std::numeric_limits<float>::max();
 

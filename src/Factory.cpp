@@ -14,7 +14,7 @@
 #include "IOperand.hpp"
 #include "TNumber.hpp"
 
-Factory::Factory() 						{
+Factory::Factory() {
 	this->fct_create.push_back(&Factory::createInt8);
 	this->fct_create.push_back(&Factory::createInt16);
 	this->fct_create.push_back(&Factory::createInt32);
@@ -52,22 +52,6 @@ IOperand const *Factory::createOperand( eOperandType type, std::string const & v
 	int precision = static_cast<int>(type);
 
 	return( (this->*(fct_create[precision]))(value) );
-
-	// if (type == eOperandType::Int8)
-	// {
-	// 	// return( (this->*(fct_create[0]))(value) );
-	// 	return (this->createInt8(value));
-	// }
-	// else if (type == eOperandType::Int16)
-	// 	return (this->createInt16(value));
-	// else if (type == eOperandType::Int32)
-	// 	return (this->createInt32(value));
-	// else if (type == eOperandType::Float)
-	// 	return (this->createFloat(value));
-	// else if (type == eOperandType::Double)
-	// 	return (this->createDouble(value));
-	// else
-	// 	throw BadOperand();
 }
 
 IOperand const *Factory::createInt8( std::string const & value ) const {

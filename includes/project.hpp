@@ -19,6 +19,8 @@ enum eOperandType {Int8, Int16, Int32, Float, Double};
 #include <typeinfo>
 #include <cfloat>
 #include <vector>
+#include <list>
+#include <limits>
 
 #define PRECISION_INT8 	static_cast<int>(eOperandType::Int8)
 #define PRECISION_INT16 static_cast<int>(eOperandType::Int16)

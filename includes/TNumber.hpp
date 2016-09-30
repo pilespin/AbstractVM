@@ -138,12 +138,9 @@ template <class T>
 IOperand const *NumberType<T>::operator+( IOperand const & rhs ) const {
 	(void)rhs;
 
-
-	std::string::size_type sz;
-
-	long double right 	= std::stof(rhs.toString(), &sz);
-	long double 	left 	= this->getValue();
-	int	precision 	= this->getMinimumPrecision(rhs);
+	double 	right 		= std::stof(rhs.toString());
+	double 	left 		= this->getValue();
+	int		precision 	= this->getMinimumPrecision(rhs);
 
 	if ((left + right) > this->getMaxValueOfPrecision(precision))
 		throw Overflow();
