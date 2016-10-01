@@ -64,25 +64,7 @@ void	Stack::operateCore(eOperatorType op) {
 	else
 		throw WTF();
 
-	// // double 	right 			= std::stof(rhs.toString());
-	// int ret = fpclassify(std::stof(res->toString()));
-
-	// if (ret == FP_INFINITE)
-	// 	throw Overflow();
-	// 	// std::cout << "Positive or negative infinity (overflow)" << std::endl;
-	// else if (ret == FP_NAN)
-	// 	throw NotANumber();
-	// 	// std::cout << "Not-A-Number" << std::endl;
-	// else if (ret == FP_ZERO)
-	// 	throw ValueOfZero();
-	// 	// std::cout << "Value of zero" << std::endl;
-	// else if (ret == FP_SUBNORMAL)
-	// 	throw Underflow();
-	// 	// std::cout << "Sub-normal value (underflow)" << std::endl;
-	// else
-		this->list.push_front(res);
-		// else if (ret == FP_NORMAL)
-		// std::cout << "Normal" << std::endl;
+	this->list.push_front(res);
 
 }
 
@@ -161,6 +143,19 @@ void	Stack::operate(eOperatorType op) {
 
 }
 
-void	Stack::empty() {
+void	Stack::print() {
+
+	IOperand const *one = this->getAndPopOnStack();
+
+	if (one->getType() == eOperandType::Int8)
+	{
+		char val = std::stoi(one->toString());
+		std::cout << val << std::endl;
+	}
+	else
+		throw AssertError();
+}
+
+void	Stack::exit() {
 
 }

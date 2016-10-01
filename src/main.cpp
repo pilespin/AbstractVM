@@ -133,7 +133,7 @@ int main()
 
 		Factory factory = Factory();
 		IOperand const *one = factory.createOperand(eOperandType::Double, "50");
-		IOperand const *two = factory.createOperand(eOperandType::Int8, "50");
+		IOperand const *two = factory.createOperand(eOperandType::Int8, "90");
 
 		(void)one;
 		(void)two;
@@ -141,13 +141,21 @@ int main()
 		s.push(two);
 
 		s.dump();
-		s.assert("+50.0000");
+		s.assert("+90.0000");
 
 		// s.pop();
 		// s.pop();
 		s.dump();
 		s.operate(eOperatorType::Mul);
+		s.push(two);
+		s.push(two);
+		s.push(two);
+		s.push(two);
 		s.dump();
+		s.print();
+		s.print();
+		s.print();
+		s.print();
 
 
 	}

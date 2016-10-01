@@ -30,10 +30,11 @@ public:
 	void				dump();
 	void				assert(std::string value);
 	void				operate(eOperatorType op);
+	void				print();
+	void				exit();
 
 	int								getValue() const;
 	std::list<IOperand const *>		getList() const;
-	void							empty();
 
 	class EmptyStack : public std::exception {
 	public:

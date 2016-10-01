@@ -180,20 +180,16 @@ IOperand const *NumberType<T>::calc(double left, double right, eOperandType prec
 	else
 		throw WTF();
 
-	int ret = fpclassify(res);
+	int ret = std::fpclassify(res);
 
 	if (ret == FP_INFINITE)
 		throw Infinite();
-		// std::cout << "Positive or negative infinity (overflow)" << std::endl;
 	else if (ret == FP_NAN)
 		throw NotANumber();
-		// std::cout << "Not-A-Number" << std::endl;
 	else if (ret == FP_ZERO)
 		throw ValueOfZero();
-		// std::cout << "Value of zero" << std::endl;
 	else if (ret == FP_SUBNORMAL)
 		throw Underflow();
-		// std::cout << "Sub-normal value (underflow)" << std::endl;
 
 	if ((res) > this->getMaxValueOfPrecision(precision))
 		throw Overflow();
