@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/15 17:44:48 by pilespin          #+#    #+#             */
-/*   Updated: 2016/09/30 18:27:58 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/01 22:09:17 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,24 @@ public:
 
 	void		empty();
 
-	class ValueTooHigh : public std::exception {
+	class Overflow : public std::exception {
 	public:
 		virtual const char *what() const throw() {
-			return ("Bad value is too high");
+			return ("Overflow");
 		}
 	};
 
-	class ValueTooLow : public std::exception {
+	class Underflow : public std::exception {
 	public:
 		virtual const char *what() const throw() {
-			return ("Bad value is too Low");
+			return ("Underflow");
 		}
 	};
-
-	// class BadOperand : public std::exception {
-	// public:
-	// 	virtual const char *what() const throw() {
-	// 		return ("Bad Operande");
-	// 	}
-	// };
 
 private:
-	// std::vector<IOperand const *> v;
 	// typedef	IOperand const * (Factory::*fct)( std::string const & ) const;
-	std::vector<IOperand const * (Factory::*)( std::string const & ) const> fct_create;
 	// std::vector<fct> fct_create;
+	std::vector<IOperand const * (Factory::*)( std::string const & ) const> fct_create;
 	
 	IOperand const * createInt8( std::string const & value ) const;
 	IOperand const * createInt16( std::string const & value ) const;

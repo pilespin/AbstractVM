@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:34:08 by pilespin          #+#    #+#             */
-/*   Updated: 2016/09/30 18:26:11 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/01 21:39:12 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 #include "Stack.hpp"
 #include <sstream>
 
-#include <cmath>
-#include <ctgmath>
+
 
 void ft_add(eOperandType ioone, eOperandType iotwo, std::string vone, std::string vtwo)
 {
@@ -31,7 +30,51 @@ void ft_add(eOperandType ioone, eOperandType iotwo, std::string vone, std::strin
 		IOperand const *two = factory.createOperand(iotwo, vtwo);
 		std::cout << "Precision: "<< one->getPrecision() << " | " << one->toString() << " + " << two->toString() << " = ";
 		res = *one + *two;
-		std::cout << res->toString() << std::endl;
+		std::cout << res->toString();
+
+		double a = std::stof(vone);
+		double b = std::stof(vtwo);
+		double c = a + b;
+		double d = std::stof(res->toString());
+		if (c == d)
+			std::cout << " OK ";
+		else
+			std::cout << " Check ";
+
+		std::cout << std::endl;
+
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+}
+
+void ft_div(eOperandType ioone, eOperandType iotwo, std::string vone, std::string vtwo)
+{
+	try
+	{
+		Factory factory = Factory();
+
+		IOperand const *res;
+
+		IOperand const *one = factory.createOperand(ioone, vone);
+		IOperand const *two = factory.createOperand(iotwo, vtwo);
+		std::cout << "Precision: "<< one->getPrecision() << " | " << one->toString() << " / " << two->toString() << " = ";
+		res = *one / *two;
+		std::cout << res->toString();
+
+		double a = std::stof(vone);
+		double b = std::stof(vtwo);
+		double c = a / b;
+		double d = std::stof(res->toString());
+		if (c == d)
+			std::cout << " OK ";
+		else
+			std::cout << " Check ";
+
+		std::cout << std::endl;
+
 	}
 	catch (std::exception &e)
 	{
@@ -43,6 +86,8 @@ void ft_test_add()
 {
 	try
 	{
+		std::cout << "ADD" << std::endl;
+		std::cout << "--------------" << std::endl;
 		ft_add(eOperandType::Int8, eOperandType::Int8, "120", "7");
 		ft_add(eOperandType::Int8, eOperandType::Int8, "120", "8");
 		ft_add(eOperandType::Int8, eOperandType::Int8, "-120", "-8");
@@ -63,6 +108,11 @@ void ft_test_add()
 		std::cout << "--------------" << std::endl;
 		ft_add(eOperandType::Double, eOperandType::Double, "350.123456", "1");
 		ft_add(eOperandType::Double, eOperandType::Int8, "350.123456", "1");
+		std::cout << "DIV" << std::endl;
+		std::cout << "--------------" << std::endl;
+		ft_div(eOperandType::Double, eOperandType::Int8, "10", "2");
+		ft_div(eOperandType::Double, eOperandType::Int8, "-10", "2");
+		ft_div(eOperandType::Double, eOperandType::Int8, "10", "0");
 
 	}
 	catch (std::exception &e)
@@ -73,20 +123,38 @@ void ft_test_add()
 
 int main()
 {
-	ft_test_add();
 
-	Stack s = Stack();
-	(void)s;
+	try
+	{
+		ft_test_add();
 
-	Factory factory = Factory();
-	IOperand const *one = factory.createOperand(eOperandType::Double, "50");
-	IOperand const *two = factory.createOperand(eOperandType::Double, "100");
+		Stack s = Stack();
+		(void)s;
 
-	s.push(one);
-	s.push(two);
+		Factory factory = Factory();
+		IOperand const *one = factory.createOperand(eOperandType::Double, "50");
+		IOperand const *two = factory.createOperand(eOperandType::Int8, "50");
 
-	s.dump();
+		(void)one;
+		(void)two;
+		s.push(one);
+		s.push(two);
 
+		s.dump();
+		s.assert("+50.0000");
+
+		// s.pop();
+		// s.pop();
+		s.dump();
+		s.operate(eOperatorType::Mul);
+		s.dump();
+
+
+	}
+	catch (std::exception &e)
+	{	
+		std::cout << e.what() << std::endl;
+	}
 
 	// float fl = std::numeric_limits<float>::max();
 

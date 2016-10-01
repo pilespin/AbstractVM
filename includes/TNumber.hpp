@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/26 16:18:12 by pilespin          #+#    #+#             */
-/*   Updated: 2016/09/29 16:41:25 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/01 22:16:16 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,26 @@ public:
 	T 					getValue() const;
 	double				getMaxValueOfPrecision( int precision ) const;
 	double				getMinValueOfPrecision( int precision ) const;
-	int					getMinimumPrecision( IOperand const &value ) const;
+	eOperandType		getMinimumPrecision( IOperand const &value ) const;
 
 	int 				getPrecision() const;
 	eOperandType 		getType( void ) const;
 	IOperand const 		*operator+( IOperand const & rhs ) const;
+	IOperand const 		*operator-( IOperand const & rhs ) const;
+	IOperand const 		*operator*( IOperand const & rhs ) const;
+	IOperand const 		*operator/( IOperand const & rhs ) const;
+	IOperand const 		*operator%( IOperand const & rhs ) const;
+	IOperand const 		*calc(double left, double right, eOperandType precision, std::string operation) const;
 	std::string const 	&toString( void ) const;
+
+	
+
+	class Infinite : public std::exception {
+	public:
+		virtual const char *what() const throw() {
+			return ("Infinite");
+		}
+	};
 
 	class Overflow : public std::exception {
 	public:
@@ -47,10 +61,24 @@ public:
 		}
 	};
 
+	class ValueOfZero : public std::exception {
+	public:
+		virtual const char *what() const throw() {
+			return ("Value of zero");
+		}
+	};
+
 	class BadType : public std::exception {
 	public:
 		virtual const char *what() const throw() {
 			return ("BadType");
+		}
+	};
+
+	class NotANumber : public std::exception {
+	public:
+		virtual const char *what() const throw() {
+			return ("Not-A-Number");
 		}
 	};
 
@@ -135,75 +163,136 @@ std::string const & NumberType<T>::toString( void ) const {
 }
 
 template <class T>
-IOperand const *NumberType<T>::operator+( IOperand const & rhs ) const {
-	(void)rhs;
+IOperand const *NumberType<T>::calc(double left, double right, eOperandType precision, std::string operation) const {
 
-	double 	right 		= std::stof(rhs.toString());
-	double 	left 		= this->getValue();
-	int		precision 	= this->getMinimumPrecision(rhs);
+	long double res = 0;
 
-	if ((left + right) > this->getMaxValueOfPrecision(precision))
-		throw Overflow();
-	else if ((left + right) < this->getMinValueOfPrecision(precision))
-		throw Underflow();
-
-	if (precision == PRECISION_INT8)
-		return (new NumberType<int8_t>(left + right));
-	else if (precision == PRECISION_INT16)
-		return (new NumberType<int16_t>(left + right));
-	else if (precision == PRECISION_INT32)
-		return (new NumberType<int32_t>(left + right));
-	else if (precision == PRECISION_FLT)
-		return (new NumberType<float>(left + right));
-	else if (precision == PRECISION_DBL)
-		return (new NumberType<double>(left + right));
+	if (!operation.compare("+"))
+		res = left + right;
+	else if (!operation.compare("-"))
+		res = left - right;
+	else if (!operation.compare("*"))
+		res = left * right;
+	else if (!operation.compare("/"))
+		res = left / right;
+	else if (!operation.compare("%"))
+		res = fmod(left, right);
 	else
 		throw WTF();
+
+	int ret = fpclassify(res);
+
+	if (ret == FP_INFINITE)
+		throw Infinite();
+		// std::cout << "Positive or negative infinity (overflow)" << std::endl;
+	else if (ret == FP_NAN)
+		throw NotANumber();
+		// std::cout << "Not-A-Number" << std::endl;
+	else if (ret == FP_ZERO)
+		throw ValueOfZero();
+		// std::cout << "Value of zero" << std::endl;
+	else if (ret == FP_SUBNORMAL)
+		throw Underflow();
+		// std::cout << "Sub-normal value (underflow)" << std::endl;
+
+	if ((res) > this->getMaxValueOfPrecision(precision))
+		throw Overflow();
+	else if ((res) < this->getMinValueOfPrecision(precision))
+		throw Underflow();
+
+	if (precision == eOperandType::Int8)
+		return (new NumberType<int8_t>(res));
+	else if (precision == eOperandType::Int16)
+		return (new NumberType<int16_t>(res));
+	else if (precision == eOperandType::Int32)
+		return (new NumberType<int32_t>(res));
+	else if (precision == eOperandType::Float)
+		return (new NumberType<float>(res));
+	else if (precision == eOperandType::Double)
+		return (new NumberType<double>(res));
+	else
+		throw WTF();
+}
+
+template <class T>
+IOperand const *NumberType<T>::operator+( IOperand const & rhs ) const {
+
+	double 	right 			= std::stof(rhs.toString());
+	double 	left 			= this->getValue();
+	eOperandType precision 	= this->getMinimumPrecision(rhs);
+
+	return (this->calc(left, right, precision, "+"));
 
 }
 
 template <class T>
-int NumberType<T>::getMinimumPrecision( IOperand const &value) const {
+IOperand const *NumberType<T>::operator-( IOperand const & rhs ) const {
+
+	double 	right 			= std::stof(rhs.toString());
+	double 	left 			= this->getValue();
+	eOperandType precision 	= this->getMinimumPrecision(rhs);
+
+	return (this->calc(left, right, precision, "-"));
+
+}
+
+template <class T>
+IOperand const *NumberType<T>::operator*( IOperand const & rhs ) const {
+
+	double 	right 			= std::stof(rhs.toString());
+	double 	left 			= this->getValue();
+	eOperandType precision 	= this->getMinimumPrecision(rhs);
+
+	return (this->calc(left, right, precision, "*"));
+
+}
+
+template <class T>
+IOperand const *NumberType<T>::operator/( IOperand const & rhs ) const {
+
+	double 	right 			= std::stof(rhs.toString());
+	double 	left 			= this->getValue();
+	eOperandType precision 	= this->getMinimumPrecision(rhs);
+
+	return (this->calc(left, right, precision, "/"));
+
+}
+
+template <class T>
+IOperand const *NumberType<T>::operator%( IOperand const & rhs ) const {
+
+	double 	right 			= std::stof(rhs.toString());
+	double 	left 			= this->getValue();
+	eOperandType precision 	= this->getMinimumPrecision(rhs);
+
+	return (this->calc(left, right, precision, "%"));
+
+}
+
+template <class T>
+eOperandType NumberType<T>::getMinimumPrecision( IOperand const &value) const {
 
 	int left 	= this->getPrecision();
 	int right 	= value.getPrecision();
 
 	if (left > right)
-		return (left);
+		return (static_cast<eOperandType>(left));
 	else
-		return (right);
+		return (static_cast<eOperandType>(right));
 }
 
 template <class T>
 double NumberType<T>::getMaxValueOfPrecision( int precision) const {
 
-	if (precision == PRECISION_INT8)
-		return (INT8_MAX);
-	else if (precision == PRECISION_INT16)
-		return (INT16_MAX);
-	else if (precision == PRECISION_INT32)
-		return (INT32_MAX);
-	else if (precision == PRECISION_FLT)
-		return (FLT_MAX);
-	else if (precision == PRECISION_DBL)
-		return (DBL_MAX);
-	else
-		throw BadType();
+	double valMax[] = {INT8_MAX, INT16_MAX, INT32_MAX, FLT_MAX, DBL_MAX};
+
+	return (valMax[precision]);
 }
 
 template <class T>
 double NumberType<T>::getMinValueOfPrecision( int precision) const {
 
-	if (precision == PRECISION_INT8)
-		return (INT8_MIN);
-	else if (precision == PRECISION_INT16)
-		return (INT16_MIN);
-	else if (precision == PRECISION_INT32)
-		return (INT32_MIN);
-	else if (precision == PRECISION_FLT)
-		return (-FLT_MAX);
-	else if (precision == PRECISION_DBL)
-		return (-DBL_MAX);
-	else
-		throw BadType();
+	double valMin[] = {INT8_MIN, INT16_MIN, INT32_MIN, -FLT_MAX, -DBL_MAX};
+	
+	return (valMin[precision]);
 }
