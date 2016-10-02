@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:34:08 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/01 21:39:12 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/02 17:09:48 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "Factory.hpp"
 #include "TNumber.hpp"
 #include "Stack.hpp"
+#include "Parse.hpp"
 #include <sstream>
 
 
@@ -129,6 +130,7 @@ int main()
 		ft_test_add();
 
 		Stack s = Stack();
+		Parse p = Parse();
 		(void)s;
 
 		Factory factory = Factory();
@@ -157,12 +159,30 @@ int main()
 		s.print();
 		s.print();
 
+		p.readFile("sample");
+
 
 	}
 	catch (std::exception &e)
 	{	
 		std::cout << e.what() << std::endl;
 	}
+
+	// std::string s ("this subject has a submarine as a subsequence");
+	// std::smatch m;
+ //  	std::regex e ("sub");   // matches words beginning by "sub"
+
+ //  	std::cout << "Target sequence: " << s << std::endl;
+ //  	std::cout << "Regular expression: /\\b(sub)([^ ]*)/" << std::endl;
+ //  	std::cout << "The following matches and submatches were found:" << std::endl;
+
+ //  	while (std::regex_search (s,m,e))
+ //  	{
+ //  		for (auto x:m) std::cout << x << " ";
+ //  			std::cout << std::endl;
+ //  		s = m.suffix().str();
+ //  	}
+
 
 	// float fl = std::numeric_limits<float>::max();
 
@@ -219,5 +239,5 @@ int main()
 	// delete p;
 
 
-	return (0);
-}
+  	return (0);
+  }
