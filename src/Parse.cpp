@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Factory.hpp"
 #include "Parse.hpp"
 
 Parse::Parse()					{	this->_val = 0;	}
@@ -49,75 +50,97 @@ void	Parse::openFile(std::string filename) {
 
 }
 
+static std::string trim(std::string str)
+{
+	int st;
+	int end;
+
+	st = str.find_first_not_of(" 	");
+	end = str.find_last_not_of(" 	");
+
+	if ((end > -1 && st > -1))
+		return (str.substr(st, (end - st) + 1));
+	else
+		return ("");
+}
+
 void	Parse::readFile() {
 
 	std::string line;
-	std::smatch res;
-	int		pos;
-
-	// trim(line);
-
-	// std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+	int			pos;
 
 	if (this->file.is_open())
 	{
 		while (getline(this->file, line))
 		{
-			std::cout << "full: " << line << std::endl;
+			this->command = "";
+			this->type = "";
+			this->value = "";
 			pos = line.find(";");
 			if (!pos)
 				continue;
 			else
 				line = line.substr(0, pos);
-
-			std::cout << " cut: " << line << std::endl;
-
-			if (std::regex_search(line, res, static_cast<std::regex>(REGEX_IF_COMMAND_EXIST)))
+			line = trim(line);
+			if (line.length())
 			{
-				if (std::regex_search(line, res, static_cast<std::regex>(REGEX_IF_WITHOUT_ARGUMENT)))
-				{
-					this->command = res.str();
-					this->type = "";
-					this->value = "";
-				}
-				else if (std::regex_search(line, res, static_cast<std::regex>(REGEX_CHECK_IF_IS_VALID_INT)))
-				{
-					if (std::regex_search(line, res, static_cast<std::regex>(REGEX_GET_COMMAND)))
-						this->command = res.str();
-					if (std::regex_search(line, res, static_cast<std::regex>(REGEX_GET_TYPE)))
-						this->type = res.str();
-					if (std::regex_search(line, res, static_cast<std::regex>(REGEX_GET_VALUE_INT)))
-						this->value = res[1].str();
-				}
-				else if (std::regex_search(line, res, static_cast<std::regex>(REGEX_CHECK_IF_IS_VALID_FLOAT)))
-				{
-					if (std::regex_search(line, res, static_cast<std::regex>(REGEX_GET_COMMAND)))
-						this->command = res.str();
-					if (std::regex_search(line, res, static_cast<std::regex>(REGEX_GET_TYPE)))
-						this->type = res.str();
-					if (std::regex_search(line, res, static_cast<std::regex>(REGEX_GET_VALUE_FLOAT)))
-						this->value = res[1].str();
-				}
-				else
-				{
-					std::cout << "Syntax error" << std::endl;
-					continue;
-				}
-				std::cout << "command: " << this->command << " type: " << this->type << " value: " << this->value << std::endl << std::endl;
+				this->parseLine(line);
 			}
-			else
-				std::cout << "Bad command" << std::endl;
 		}
 		this->file.close();
 	}
 	else
 		std::cout << "Please call openFile before" << std::endl;
-
-	// std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-	// std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
-	// std::cout << "It took me " << time_span.count() << " seconds." << std::endl;
-
 	this->stack->dump();
+
+}
+
+void	Parse::parseLine(std::string line) {
+
+	std::smatch res;
+
+	if (std::regex_search(line, res, static_cast<std::regex>(REGEX_IF_COMMAND_EXIST)))
+	{
+		if (std::regex_search(line, res, static_cast<std::regex>(REGEX_IF_WITHOUT_ARGUMENT)))
+			this->command = res.str();
+		else if (std::regex_search(line, res, static_cast<std::regex>(REGEX_CHECK_IF_IS_VALID_INT)))
+		{
+			if (std::regex_search(line, res, static_cast<std::regex>(REGEX_GET_COMMAND)))
+				this->command = res.str();
+			if (std::regex_search(line, res, static_cast<std::regex>(REGEX_GET_TYPE)))
+				this->type = res.str();
+			if (std::regex_search(line, res, static_cast<std::regex>(REGEX_GET_VALUE_INT)))
+				this->value = res[1].str();
+		}
+		else if (std::regex_search(line, res, static_cast<std::regex>(REGEX_CHECK_IF_IS_VALID_FLOAT)))
+		{
+			if (std::regex_search(line, res, static_cast<std::regex>(REGEX_GET_COMMAND)))
+				this->command = res.str();
+			if (std::regex_search(line, res, static_cast<std::regex>(REGEX_GET_TYPE)))
+				this->type = res.str();
+			if (std::regex_search(line, res, static_cast<std::regex>(REGEX_GET_VALUE_FLOAT)))
+				this->value = res[1].str();
+		}
+		else
+		{
+			std::cout << "Syntax error" << std::endl;
+			return;
+		}
+		std::cout << "command: " << this->command << " type: " << this->type << " value: " << this->value << std::endl;
+		std::cout << std::endl;
+		this->execute();
+	}
+	else
+		std::cout << "Bad command" << std::endl;
+
+}
+
+void	Parse::execute() {
+
+	// IOperand const *one = factory.createOperand(ioone, vone);
+
+	// if (!this->command.compare(push))
+	// 	this->stack->push()
 
 }
 

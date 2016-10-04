@@ -33,6 +33,8 @@ public:
 	Parse(Parse const &src);
 	Parse &operator=(Parse const &rhs);
 
+	void		parseLine(std::string line);
+	void		execute();
 	void		openFile(std::string filename);
 	void		readFile();
 

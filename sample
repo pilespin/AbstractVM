@@ -1,8 +1,8 @@
 ; -------------
 ; sample -
    ; -------------
-
-       push int32( +42) ;lol
+     		  push int32( +42) ;lol
+       push int32( +42);lol
 push int32(   -33)
 add
 push float(44.55)
@@ -17,7 +17,7 @@ lol ; exit
 lol ; exit
 lol ; exit
 lol ; exit
-lol ; exit
+			lol 			; exit
 lol ; exit
 lol exit
 sdfsdfsd
