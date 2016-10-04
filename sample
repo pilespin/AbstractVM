@@ -1,23 +1,37 @@
 ; -------------
 ; sample -
-   ; -------------
-     		  push int32( +42) ;lol
-       push int32( +42);lol
-push int32(   -33)
-add
-push float(44.55)
-mul
-push double(42.42)
-push int32(42)
+; -------------
+;push int32( +42) ;lol
+;push int32( +42);lol
+;push int32(   -33)
+;add
+;push float(44.55)
+;mul
+;push double(42.42)
+;push int32(42)
+;dump
+;pop
+;assert double(42)
+;exit
+
+
+
+push 		int8(   +60)
+push       	double   (    +12.0  )
+push int8(65)
+push int8(65)
+push int8(65)
+dump
+print
+print
+print
 dump
 pop
-assert double(42.42)
-exit
-lol ; exit
-lol ; exit
-lol ; exit
-lol ; exit
-			lol 			; exit
-lol ; exit
-lol exit
-sdfsdfsd
+dump
+print
+dump
+dump
+dump
+dump
+dump
+

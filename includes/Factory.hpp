@@ -6,15 +6,16 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/15 17:44:48 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/01 22:09:17 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/04 17:11:29 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include "Exception.hpp"
 #include "IOperand.hpp"
 
-class Factory {
+class Factory : public Exception{
 
 public:
 	Factory();
@@ -25,20 +26,6 @@ public:
 	IOperand const *createOperand( eOperandType type, std::string const & value ) const;
 
 	void		empty();
-
-	class Overflow : public std::exception {
-	public:
-		virtual const char *what() const throw() {
-			return ("Overflow");
-		}
-	};
-
-	class Underflow : public std::exception {
-	public:
-		virtual const char *what() const throw() {
-			return ("Underflow");
-		}
-	};
 
 private:
 	// typedef	IOperand const * (Factory::*fct)( std::string const & ) const;

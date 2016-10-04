@@ -6,17 +6,18 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/26 16:18:12 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/01 22:16:16 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/04 17:11:11 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <project.hpp>
+#include "Exception.hpp"
 #include "IOperand.hpp"
 
 template <class T>
-class NumberType : public IOperand {
+class NumberType : public IOperand, public Exception {
 
 public:
 	NumberType();
@@ -37,57 +38,6 @@ public:
 	IOperand const 		*operator%( IOperand const & rhs ) const;
 	IOperand const 		*calc(double left, double right, eOperandType precision, std::string operation) const;
 	std::string const 	&toString( void ) const;
-
-	
-
-	class Infinite : public std::exception {
-	public:
-		virtual const char *what() const throw() {
-			return ("Infinite");
-		}
-	};
-
-	class Overflow : public std::exception {
-	public:
-		virtual const char *what() const throw() {
-			return ("Overflow");
-		}
-	};
-
-	class Underflow : public std::exception {
-	public:
-		virtual const char *what() const throw() {
-			return ("Underflow");
-		}
-	};
-
-	class ValueOfZero : public std::exception {
-	public:
-		virtual const char *what() const throw() {
-			return ("Value of zero");
-		}
-	};
-
-	class BadType : public std::exception {
-	public:
-		virtual const char *what() const throw() {
-			return ("BadType");
-		}
-	};
-
-	class NotANumber : public std::exception {
-	public:
-		virtual const char *what() const throw() {
-			return ("Not-A-Number");
-		}
-	};
-
-	class WTF : public std::exception {
-	public:
-		virtual const char *what() const throw() {
-			return ("W.T.F !!!");
-		}
-	};
 
 // std::ostream &operator<<(std::ostream &o, IOperand const *c);
 

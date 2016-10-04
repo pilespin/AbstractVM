@@ -6,18 +6,23 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/02 15:09:43 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/03 19:31:35 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/04 19:38:07 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Factory.hpp"
 #include "Parse.hpp"
 
-Parse::Parse()					{	this->_val = 0;	}
+Parse::Parse() {	
+	this->_val = 0;
+	this->factory = Factory();
 
-Parse::Parse(Stack *s)					{	
+}
+
+Parse::Parse(Stack *s) {	
 	this->_val = 0;
 	this->stack = s;
+	this->factory = Factory();
 }
 
 Parse::~Parse()					{}
@@ -64,38 +69,77 @@ static std::string trim(std::string str)
 		return ("");
 }
 
+void	Parse::readFromUser() {
+
+	while (1)
+	{
+		std::string in;
+
+		std::cout << "> ";
+		std::getline(std::cin, in);
+
+		if (!in.compare(";;"))
+		{
+			this->readFileUser();
+			return;
+		}
+		this->userInput += in + "\n";
+	}
+
+}
+
+void 	Parse::cleanAndParse(std::string line) {
+
+	int			pos;
+
+	this->command = "";
+	this->type = "";
+	this->value = "";
+	pos = line.find(";");
+	if (!pos)
+		return;
+	else
+		line = line.substr(0, pos);
+	line = trim(line);
+	if (line.length())
+	{
+		this->parseLine(line, TRUE);
+	}
+
+}
+
+
+void	Parse::readFileUser() {
+
+	std::string line;
+
+	std::istringstream stream(this->userInput);
+
+	while (getline(stream, line))
+	{
+		this->cleanAndParse(line);
+	}
+
+}
+
 void	Parse::readFile() {
 
 	std::string line;
-	int			pos;
 
 	if (this->file.is_open())
 	{
 		while (getline(this->file, line))
 		{
-			this->command = "";
-			this->type = "";
-			this->value = "";
-			pos = line.find(";");
-			if (!pos)
-				continue;
-			else
-				line = line.substr(0, pos);
-			line = trim(line);
-			if (line.length())
-			{
-				this->parseLine(line);
-			}
+			this->cleanAndParse(line);
 		}
 		this->file.close();
 	}
 	else
-		std::cout << "Please call openFile before" << std::endl;
-	this->stack->dump();
+		std::cerr << "Please call openFile before" << std::endl;
 
 }
 
-void	Parse::parseLine(std::string line) {
+void	Parse::parseLine(std::string line, bool wantExcept) {
 
 	std::smatch res;
 
@@ -123,24 +167,88 @@ void	Parse::parseLine(std::string line) {
 		}
 		else
 		{
-			std::cout << "Syntax error" << std::endl;
-			return;
+			if (wantExcept)
+				throw SyntaxError();
+			else
+			{
+				std::cerr << "Syntax error" << std::endl;
+				return;
+			}
 		}
-		std::cout << "command: " << this->command << " type: " << this->type << " value: " << this->value << std::endl;
-		std::cout << std::endl;
 		this->execute();
 	}
 	else
-		std::cout << "Bad command" << std::endl;
-
+	{
+		if (wantExcept)
+			throw BadCommand();
+		else
+			std::cerr << "Bad command" << std::endl;
+	}
 }
+
 
 void	Parse::execute() {
 
-	// IOperand const *one = factory.createOperand(ioone, vone);
+	if (!this->command.compare("push"))
+	{
+		IOperand const *one = factory.createOperand(stringToIOperandType(this->type), this->value);
+		this->stack->push(one);
+	}
+	else if (!this->command.compare("assert"))
+		this->stack->assert(this->value);
+	else if (!this->command.compare("pop"))
+		this->stack->pop();
+	else if (!this->command.compare("dump"))
+		this->stack->dump();
+	else if (!this->command.compare("print"))
+		this->stack->print();
+	else if (!this->command.compare("exit"))
+		this->stack->exit();
+	else if (!this->command.compare("add"))
+		this->stack->operate(this->stringToIOperatorType(this->command));
+	else if (!this->command.compare("mul"))
+		this->stack->operate(this->stringToIOperatorType(this->command));
+	else if (!this->command.compare("div"))
+		this->stack->operate(this->stringToIOperatorType(this->command));
+	else if (!this->command.compare("sub"))
+		this->stack->operate(this->stringToIOperatorType(this->command));
+	else if (!this->command.compare("mod"))
+		this->stack->operate(this->stringToIOperatorType(this->command));
+	else
+		throw WTF();
 
-	// if (!this->command.compare(push))
-	// 	this->stack->push()
+}
+
+eOperandType	Parse::stringToIOperandType(std::string type) {
+
+	if (!type.compare("int8"))
+		return (eOperandType::Int8);
+	else if (!type.compare("int16"))
+		return (eOperandType::Int16);
+	else if (!type.compare("int32"))
+		return (eOperandType::Int32);
+	else if (!type.compare("float"))
+		return (eOperandType::Float);
+	else if (!type.compare("double"))
+		return (eOperandType::Double);
+	else
+		throw WTF();
+
+}
+
+eOperatorType	Parse::stringToIOperatorType(std::string type) {
+
+	if (!type.compare("add"))
+		return (eOperatorType::Add);
+	else if (!type.compare("mul"))
+		return (eOperatorType::Mul);
+	else if (!type.compare("sub"))
+		return (eOperatorType::Sub);
+	else if (!type.compare("div"))
+		return (eOperatorType::Div);
+	else if (!type.compare("mod"))
+		return (eOperatorType::Mod);
+	throw WTF();
 
 }
 

@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:34:08 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/03 19:15:41 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/04 19:39:34 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void ft_test_add()
 	}
 }
 
-int main()
+int main(int ac, char**av)
 {
 
 	try
@@ -131,49 +131,17 @@ int main()
 
 		Stack *s = new Stack();
 		Parse p = Parse(s);
-
 		(void)s;
+		(void)av;
 
-		Factory factory = Factory();
-		IOperand const *one = factory.createOperand(eOperandType::Double, "50");
-		IOperand const *two = factory.createOperand(eOperandType::Int8, "90");
-
-		(void)one;
-		(void)two;
-		// s.push(one);
-		// s.push(two);
-
-		// s.dump();
-		// s.assert("+90.0000");
-
-		// // s.pop();
-		// // s.pop();
-		// s.dump();
-		// s.operate(eOperatorType::Mul);
-		// s.push(two);
-		// s.push(two);
-		// s.push(two);
-		// s.push(two);
-		// s.dump();
-		// s.print();
-		// s.print();
-		// s.print();
-		// s.print();
-
-		s->push(two);
-		s->push(two);
-
-		// std::ifstream file;
-		// file.open("sampl");
-		// if (file.is_open())
-		// {
-		// 	std::cout << "Unable to open file: " << std::endl;
-		// }
-
-		p.openFile("sample");
-		p.readFile();
-
-
+		if (ac > 1)
+		{
+			std::string file = av[1];
+			p.openFile(file);
+			p.readFile();
+		}
+		else
+			p.readFromUser();
 	}
 	catch (std::exception &e)
 	{	

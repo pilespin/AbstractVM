@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/01 12:24:46 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/01 21:58:07 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/04 18:00:23 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,35 +70,24 @@ void	Stack::operateCore(eOperatorType op) {
 
 void	Stack::push(IOperand const *value) {
 
-	std::cout << "Push: ";
-	
 	this->list.push_front(value);
-
-	std::cout << "OK" << std::endl;
 
 }
 
 void	Stack::pop() {
 
-	std::cout << "Pop: ";
-
 	if (this->list.empty())
 		throw EmptyStack();
 	this->list.pop_front();
-
-	std::cout << "OK" << std::endl;
 
 }
 
 void	Stack::dump() {
 
-	std::cout << "Dump: ";
-
 	if (this->list.empty())
-		std::cout << "empty stack" << std::endl;
+		std::cout << "Empty stack" << std::endl;
 	else
 	{
-		std::cout << std::endl;
 		for (auto it = this->list.begin(); it != this->list.end(); ++it)
 			std::cout << (*it)->toString() << std::endl;
 	}
@@ -106,40 +95,21 @@ void	Stack::dump() {
 
 void	Stack::assert(std::string value) {
 
-	(void)value;
-
 	auto 	it 			= this->list.begin();
 	double 	left 		= std::stof((*it)->toString());
 	double 	right 		= std::stof(value);
 
-	std::cout << "Assert: ";
-
-	if (left == right)
-		std::cout << "OK";
-	else
-	{
-		std::cout << "KO" << std::endl;
+	if (left != right)
 		throw AssertError();
-	}
-	std::cout << std::endl;
 
 }
 
 void	Stack::operate(eOperatorType op) {
 
-	std::cout << "Add: ";
-
 	if (this->list.size() >= 2)
-	{
 		this->operateCore(op);
-		std::cout << "OK";
-	}
 	else
-	{
-		std::cout << "KO" << std::endl;
 		throw AddError();
-	}
-	std::cout << std::endl;
 
 }
 
