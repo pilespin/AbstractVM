@@ -6,15 +6,19 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/01 12:24:46 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/04 18:00:23 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/04 20:14:28 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Stack.hpp"
 
-Stack::Stack() 						{	this->_val = 0;	}
+Stack::Stack() {	
 
-Stack::~Stack()						{}
+	this->_val = 0;
+	this->goodExit = FALSE;	
+}
+
+Stack::~Stack()					{}
 
 Stack::Stack(Stack const &src)	{	*this = src;	}
 
@@ -33,9 +37,15 @@ std::ostream &operator<<(std::ostream &o, Stack &c) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-int							Stack::getValue() 	const	{	return (this->_val);	}
-std::list<IOperand const *>	Stack::getList() 	const	{	return (this->list);	}
+int					Stack::getValue() 	const	{	return (this->_val);	}
 ///////////////////////////////////////////////////////////////////////////////
+
+void				Stack::checkExit() 	const	{
+
+	if (!this->goodExit)
+		throw BadExit();	
+
+}
 
 IOperand const *	Stack::getAndPopOnStack() {
 
@@ -127,5 +137,5 @@ void	Stack::print() {
 }
 
 void	Stack::exit() {
-
+	this->goodExit = TRUE;
 }

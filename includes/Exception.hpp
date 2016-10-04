@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:05:16 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/04 17:27:45 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/04 19:55:15 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ public:
 	Exception(Exception const &src);
 	Exception &operator=(Exception const &rhs);
 
+	class BadExit : public std::exception {
+	public:
+		virtual const char *what() const throw() {
+			return ("Bad Exit");
+		}
+	};
+
 	class EmptyStack : public std::exception {
 	public:
 		virtual const char *what() const throw() {
@@ -29,7 +36,7 @@ public:
 		}
 	};
 
-		class SyntaxError : public std::exception {
+	class SyntaxError : public std::exception {
 	public:
 		virtual const char *what() const throw() {
 			return ("Syntax error");

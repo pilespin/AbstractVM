@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/01 12:24:46 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/04 17:11:18 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/04 20:13:33 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ public:
 	void				print();
 	void				exit();
 
-	int								getValue() const;
-	std::list<IOperand const *>		getList() const;
+	int					getValue() const;
+	void				checkExit() const;
 
 private:
+	bool 						goodExit;
 	int							_val;
 	std::list<IOperand const *>	list;
 };

@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:34:08 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/04 19:39:34 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/04 20:12:51 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int main(int ac, char**av)
 		}
 		else
 			p.readFromUser();
+		s->checkExit();
 	}
 	catch (std::exception &e)
 	{	
