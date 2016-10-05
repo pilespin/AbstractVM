@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/26 16:18:12 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/04 17:11:11 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/05 19:08:58 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ public:
 // std::ostream &operator<<(std::ostream &o, IOperand const *c);
 
 private:
+	// std::map< std::string, eOperandType > 	strToIoperand;
+	std::map< std::string, eOperandType > 	strToIoperand;
 	T _val;
 
 };
@@ -69,7 +71,11 @@ template <class T>
 NumberType<T>::NumberType() 		{}  
 
 template <class T>
-NumberType<T>::NumberType(T val) 	{	this->_val = val;	}  
+NumberType<T>::NumberType(T val) {
+
+	this->_val = val;
+
+}  
 
 template <class T>
 NumberType<T>::~NumberType() 		{}
@@ -89,18 +95,16 @@ eOperandType  NumberType<T>::getType( void ) const {
 	T value = this->getValue();
 	std::string id = typeid(value).name();
 
-	if (!id.compare("a"))
-		return (eOperandType::Int8);
-	else if (!id.compare("s"))
-		return (eOperandType::Int16);
-	else if (!id.compare("i"))
-		return (eOperandType::Int32);
-	else if (!id.compare("f"))
-		return (eOperandType::Float);
-	else if (!id.compare("d"))
-		return (eOperandType::Double);
-	else
-		throw WTF();
+	std::map< std::string, eOperandType > 	strToIoperand;
+
+	strToIoperand["a"] = eOperandType::Int8;
+	strToIoperand["s"] = eOperandType::Int16;
+	strToIoperand["i"] = eOperandType::Int32;
+	strToIoperand["f"] = eOperandType::Float;
+	strToIoperand["d"] = eOperandType::Double;
+
+	return (strToIoperand[id]);
+	
 }
 
 template <class T>
@@ -136,8 +140,8 @@ IOperand const *NumberType<T>::calc(double left, double right, eOperandType prec
 		throw Infinite();
 	else if (ret == FP_NAN)
 		throw NotANumber();
-	else if (ret == FP_ZERO)
-		throw ValueOfZero();
+	// else if (ret == FP_ZERO)
+	// 	throw ValueOfZero();
 	else if (ret == FP_SUBNORMAL)
 		throw Underflow();
 

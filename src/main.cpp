@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 16:34:08 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/04 20:12:51 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/05 17:14:35 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,38 @@ void ft_add(eOperandType ioone, eOperandType iotwo, std::string vone, std::strin
 		double a = std::stof(vone);
 		double b = std::stof(vtwo);
 		double c = a + b;
+		double d = std::stof(res->toString());
+		if (c == d)
+			std::cout << " OK ";
+		else
+			std::cout << " Check ";
+
+		std::cout << std::endl;
+
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+}
+
+void ft_sub(eOperandType ioone, eOperandType iotwo, std::string vone, std::string vtwo)
+{
+	try
+	{
+		Factory factory = Factory();
+
+		IOperand const *res;
+
+		IOperand const *one = factory.createOperand(ioone, vone);
+		IOperand const *two = factory.createOperand(iotwo, vtwo);
+		std::cout << "Precision: "<< one->getPrecision() << " | " << one->toString() << " - " << two->toString() << " = ";
+		res = *one - *two;
+		std::cout << res->toString();
+
+		double a = std::stof(vone);
+		double b = std::stof(vtwo);
+		double c = a - b;
 		double d = std::stof(res->toString());
 		if (c == d)
 			std::cout << " OK ";
@@ -109,6 +141,29 @@ void ft_test_add()
 		std::cout << "--------------" << std::endl;
 		ft_add(eOperandType::Double, eOperandType::Double, "350.123456", "1");
 		ft_add(eOperandType::Double, eOperandType::Int8, "350.123456", "1");
+		std::cout << "SUB" << std::endl;
+		std::cout << "--------------" << std::endl;
+		ft_sub(eOperandType::Int8, eOperandType::Int8, "-126", "2");
+		ft_sub(eOperandType::Int8, eOperandType::Int8, "-126", "3");
+		ft_sub(eOperandType::Int8, eOperandType::Int8, "126", "-1");
+		ft_sub(eOperandType::Int8, eOperandType::Int8, "126", "-2");
+		std::cout << "--------------" << std::endl;
+		ft_sub(eOperandType::Int16, eOperandType::Int8, "-32766", "1");
+		ft_sub(eOperandType::Int16, eOperandType::Int8, "-32767", "2");
+		ft_sub(eOperandType::Int16, eOperandType::Int8, "32766", "-1");
+		ft_sub(eOperandType::Int16, eOperandType::Int8, "32766", "-2");
+		// std::cout << "--------------" << std::endl;
+		// ft_sub(eOperandType::Int32, eOperandType::Int8, "2147483646", "1");
+		// ft_sub(eOperandType::Int32, eOperandType::Int8, "2147483647", "1");
+		// ft_sub(eOperandType::Int32, eOperandType::Int8, "-2147483646", "-1");
+		// ft_sub(eOperandType::Int32, eOperandType::Int8, "-2147483646", "-3");
+		// std::cout << "--------------" << std::endl;
+		// ft_sub(eOperandType::Float, eOperandType::Float, "55555.1234", "2.1234");
+		// ft_sub(eOperandType::Float, eOperandType::Float, "340282001837565597733306976381245063168", "-111111");
+		// std::cout << "--------------" << std::endl;
+		// ft_sub(eOperandType::Double, eOperandType::Double, "350.123456", "1");
+		// ft_sub(eOperandType::Double, eOperandType::Int8, "350.123456", "1");
+		std::cout << "--------------" << std::endl;
 		std::cout << "DIV" << std::endl;
 		std::cout << "--------------" << std::endl;
 		ft_div(eOperandType::Double, eOperandType::Int8, "10", "2");

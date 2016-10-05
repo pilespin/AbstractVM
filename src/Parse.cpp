@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/02 15:09:43 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/04 19:38:07 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/05 19:05:30 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,18 @@ Parse::Parse(Stack *s) {
 	this->_val = 0;
 	this->stack = s;
 	this->factory = Factory();
+
+	this->strToIoperand["int8"] = eOperandType::Int8;
+	this->strToIoperand["int16"] = eOperandType::Int16;
+	this->strToIoperand["int32"] = eOperandType::Int32;
+	this->strToIoperand["float"] = eOperandType::Float;
+	this->strToIoperand["double"] = eOperandType::Double;
+
+	this->strToIoperator["add"] = eOperatorType::Add;
+	this->strToIoperator["mul"] = eOperatorType::Mul;
+	this->strToIoperator["sub"] = eOperatorType::Sub;
+	this->strToIoperator["div"] = eOperatorType::Div; 
+	this->strToIoperator["mod"] = eOperatorType::Mod;
 }
 
 Parse::~Parse()					{}
@@ -108,7 +120,6 @@ void 	Parse::cleanAndParse(std::string line) {
 
 }
 
-
 void	Parse::readFileUser() {
 
 	std::string line;
@@ -189,6 +200,12 @@ void	Parse::parseLine(std::string line, bool wantExcept) {
 
 void	Parse::execute() {
 
+	std::map<std::string, eOperandType> groupe;
+
+	groupe["int8"] = eOperandType::Int8;
+
+
+
 	if (!this->command.compare("push"))
 	{
 		IOperand const *one = factory.createOperand(stringToIOperandType(this->type), this->value);
@@ -204,16 +221,12 @@ void	Parse::execute() {
 		this->stack->print();
 	else if (!this->command.compare("exit"))
 		this->stack->exit();
-	else if (!this->command.compare("add"))
+	else if (!this->command.compare("add") || !this->command.compare("mul") || 
+			!this->command.compare("div") || !this->command.compare("sub") ||
+			!this->command.compare("mod"))
+	{
 		this->stack->operate(this->stringToIOperatorType(this->command));
-	else if (!this->command.compare("mul"))
-		this->stack->operate(this->stringToIOperatorType(this->command));
-	else if (!this->command.compare("div"))
-		this->stack->operate(this->stringToIOperatorType(this->command));
-	else if (!this->command.compare("sub"))
-		this->stack->operate(this->stringToIOperatorType(this->command));
-	else if (!this->command.compare("mod"))
-		this->stack->operate(this->stringToIOperatorType(this->command));
+	}
 	else
 		throw WTF();
 
@@ -221,34 +234,13 @@ void	Parse::execute() {
 
 eOperandType	Parse::stringToIOperandType(std::string type) {
 
-	if (!type.compare("int8"))
-		return (eOperandType::Int8);
-	else if (!type.compare("int16"))
-		return (eOperandType::Int16);
-	else if (!type.compare("int32"))
-		return (eOperandType::Int32);
-	else if (!type.compare("float"))
-		return (eOperandType::Float);
-	else if (!type.compare("double"))
-		return (eOperandType::Double);
-	else
-		throw WTF();
+	return (strToIoperand[type]);
 
 }
 
 eOperatorType	Parse::stringToIOperatorType(std::string type) {
 
-	if (!type.compare("add"))
-		return (eOperatorType::Add);
-	else if (!type.compare("mul"))
-		return (eOperatorType::Mul);
-	else if (!type.compare("sub"))
-		return (eOperatorType::Sub);
-	else if (!type.compare("div"))
-		return (eOperatorType::Div);
-	else if (!type.compare("mod"))
-		return (eOperatorType::Mod);
-	throw WTF();
+	return (strToIoperator[type]);
 
 }
 

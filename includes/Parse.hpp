@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/02 15:09:43 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/04 20:01:28 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/05 18:05:16 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ public:
 	void		empty();
 
 private:
+
+	std::map< std::string, eOperandType > 	strToIoperand;
+	std::map< std::string, eOperatorType > 	strToIoperator;
+
 	int 			_val;
 	Stack			*stack;
 	Factory 		factory;

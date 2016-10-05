@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/15 18:48:50 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/04 19:30:56 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/05 17:14:54 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,3 +30,4 @@ enum eOperatorType 	{Add, Sub, Mul, Div, Mod};
 #include <cmath>
 #include <ctgmath>
 #include <regex>
+#include <map>
