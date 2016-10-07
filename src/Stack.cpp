@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/01 12:24:46 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/04 20:14:28 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/07 21:12:11 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,16 @@ Stack::~Stack()					{}
 
 Stack::Stack(Stack const &src)	{	*this = src;	}
 
-// Stack	&Stack::operator=(Stack const &rhs) {
+Stack	&Stack::operator=(Stack const &rhs) {
 
-// 	if (this != &rhs)
-// 	{
-// 		this->_val = rhs._val;
-// 	}
-// 	return (*this);
-// }
+	if (this != &rhs)
+	{
+		this->_val 		= rhs._val;
+		this->goodExit 	= rhs.goodExit;
+		this->list 		= rhs.list;
+	}
+	return (*this);
+}
 
 std::ostream &operator<<(std::ostream &o, Stack &c) {
 	o << "Stack: " << c.getValue() << " ";
@@ -43,12 +45,14 @@ int					Stack::getValue() 	const	{	return (this->_val);	}
 void				Stack::checkExit() 	const	{
 
 	if (!this->goodExit)
-		throw BadExit();	
+		throw Error("This program was not terminated correctly, You need to use the \"exit\" command for exit properly, use this command is ABSOLUTELY NEEDED if you don't want to see this ERROR!");	
 
 }
 
 IOperand const *	Stack::getAndPopOnStack() {
 
+	if (this->list.empty())
+		throw Error("Empty Stack");
 	IOperand const *one = this->list.front();
 	this->list.pop_front();
 	return (one);
@@ -72,7 +76,7 @@ void	Stack::operateCore(eOperatorType op) {
 	else if (op == eOperatorType::Mod)
 		res = *left % *right;
 	else
-		throw WTF();
+		throw Error("WTF2");
 
 	this->list.push_front(res);
 
@@ -87,7 +91,7 @@ void	Stack::push(IOperand const *value) {
 void	Stack::pop() {
 
 	if (this->list.empty())
-		throw EmptyStack();
+		throw Error("Empty Stack");
 	this->list.pop_front();
 
 }
@@ -105,12 +109,15 @@ void	Stack::dump() {
 
 void	Stack::assert(std::string value) {
 
+	if (this->list.empty())
+		throw Error("Assertion error");
+
 	auto 	it 			= this->list.begin();
-	double 	left 		= std::stof((*it)->toString());
-	double 	right 		= std::stof(value);
+	double 	left 		= std::stod((*it)->toString());
+	double 	right 		= std::stod(value);
 
 	if (left != right)
-		throw AssertError();
+		throw Error("Assertion error");
 
 }
 
@@ -119,7 +126,7 @@ void	Stack::operate(eOperatorType op) {
 	if (this->list.size() >= 2)
 		this->operateCore(op);
 	else
-		throw AddError();
+		throw Error("Need a least two value in stack");
 
 }
 
@@ -133,7 +140,7 @@ void	Stack::print() {
 		std::cout << val << std::endl;
 	}
 	else
-		throw AssertError();
+		throw Error("Assertion error");
 }
 
 void	Stack::exit() {

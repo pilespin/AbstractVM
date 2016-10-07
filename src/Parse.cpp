@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/02 15:09:43 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/05 19:05:30 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/07 20:57:33 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 
 Parse::Parse() {	
 	this->_val = 0;
+	this->lineError = 0;
 	this->factory = Factory();
 
 }
 
 Parse::Parse(Stack *s) {	
 	this->_val = 0;
+	this->lineError = 0;
 	this->stack = s;
 	this->factory = Factory();
 
@@ -46,6 +48,13 @@ Parse	&Parse::operator=(Parse const &rhs) {
 	if (this != &rhs)
 	{
 		this->_val = rhs._val;
+		this->lineError = rhs.lineError;
+		this->stack = rhs.stack;
+		this->factory = rhs.factory;
+		this->userInput = rhs.userInput;
+		this->command = rhs.command;
+		this->type = rhs.type;
+		this->value = rhs.value;
 	}
 	return (*this);
 }
@@ -88,8 +97,8 @@ void	Parse::readFromUser() {
 		std::string in;
 
 		std::cout << "> ";
-		std::getline(std::cin, in);
-
+		if (!std::getline(std::cin, in))
+			return;
 		if (!in.compare(";;"))
 		{
 			this->readFileUser();
@@ -104,6 +113,7 @@ void 	Parse::cleanAndParse(std::string line) {
 
 	int			pos;
 
+	this->lineError++;
 	this->command = "";
 	this->type = "";
 	this->value = "";
@@ -115,7 +125,7 @@ void 	Parse::cleanAndParse(std::string line) {
 	line = trim(line);
 	if (line.length())
 	{
-		this->parseLine(line, TRUE);
+		this->parseLine(line);
 	}
 
 }
@@ -150,8 +160,9 @@ void	Parse::readFile() {
 
 }
 
-void	Parse::parseLine(std::string line, bool wantExcept) {
+void	Parse::parseLine(std::string line) {
 
+	std::string error;
 	std::smatch res;
 
 	if (std::regex_search(line, res, static_cast<std::regex>(REGEX_IF_COMMAND_EXIST)))
@@ -178,22 +189,13 @@ void	Parse::parseLine(std::string line, bool wantExcept) {
 		}
 		else
 		{
-			if (wantExcept)
-				throw SyntaxError();
-			else
-			{
-				std::cerr << "Syntax error" << std::endl;
-				return;
-			}
+			throw Error("Line " + std::to_string(this->lineError) + ": " + "Syntax error");
 		}
 		this->execute();
 	}
 	else
 	{
-		if (wantExcept)
-			throw BadCommand();
-		else
-			std::cerr << "Bad command" << std::endl;
+		throw Error("Line " + std::to_string(this->lineError) + ": " + "This command not exist");
 	}
 }
 
@@ -222,13 +224,13 @@ void	Parse::execute() {
 	else if (!this->command.compare("exit"))
 		this->stack->exit();
 	else if (!this->command.compare("add") || !this->command.compare("mul") || 
-			!this->command.compare("div") || !this->command.compare("sub") ||
-			!this->command.compare("mod"))
+		!this->command.compare("div") || !this->command.compare("sub") ||
+		!this->command.compare("mod"))
 	{
 		this->stack->operate(this->stringToIOperatorType(this->command));
 	}
 	else
-		throw WTF();
+		throw Error("WTF1");
 
 }
 

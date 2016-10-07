@@ -6,7 +6,7 @@
 #    By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/05/15 18:31:49 by pilespin          #+#    #+#              #
-#    Updated: 2016/09/14 15:51:04 by pilespin         ###   ########.fr        #
+#    Updated: 2016/10/07 20:34:34 by pilespin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 	
 NAME	=	avm
 
-CC		=	g++ -std=c++11
+CC		=	g++ -std=c++11 -g
 FLAGS	=	-Wall -Wextra -Werror
 
 SDIR	=	src/

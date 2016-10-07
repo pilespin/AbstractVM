@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/02 15:09:43 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/05 18:05:16 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/07 20:53:58 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ public:
 	Parse(Parse const &src);
 	Parse &operator=(Parse const &rhs);
 
-	void			parseLine(std::string line, bool wantExcept);
+	void			parseLine(std::string line);
 	void			execute();
 	void			openFile(std::string filename);
 	void			readFile();
@@ -53,6 +53,7 @@ private:
 	std::map< std::string, eOperatorType > 	strToIoperator;
 
 	int 			_val;
+	int 			lineError;
 	Stack			*stack;
 	Factory 		factory;
 	std::ifstream 	file;

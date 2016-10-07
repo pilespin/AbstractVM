@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/26 16:18:12 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/05 19:08:58 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/07 19:52:18 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ public:
 // std::ostream &operator<<(std::ostream &o, IOperand const *c);
 
 private:
-	// std::map< std::string, eOperandType > 	strToIoperand;
 	std::map< std::string, eOperandType > 	strToIoperand;
 	T _val;
 
@@ -132,42 +131,32 @@ IOperand const *NumberType<T>::calc(double left, double right, eOperandType prec
 	else if (!operation.compare("%"))
 		res = fmod(left, right);
 	else
-		throw WTF();
+		throw Error("WTF");
 
 	int ret = std::fpclassify(res);
 
 	if (ret == FP_INFINITE)
-		throw Infinite();
+		throw Error("Infinite value");
 	else if (ret == FP_NAN)
-		throw NotANumber();
+		throw Error("Not a number");
 	// else if (ret == FP_ZERO)
 	// 	throw ValueOfZero();
 	else if (ret == FP_SUBNORMAL)
-		throw Underflow();
+		throw Error("Underflow");
 
 	if ((res) > this->getMaxValueOfPrecision(precision))
-		throw Overflow();
+		throw Error("Overflow");
 	else if ((res) < this->getMinValueOfPrecision(precision))
-		throw Underflow();
+		throw Error("Underflow");
 
-	if (precision == eOperandType::Int8)
-		return (new NumberType<int8_t>(res));
-	else if (precision == eOperandType::Int16)
-		return (new NumberType<int16_t>(res));
-	else if (precision == eOperandType::Int32)
-		return (new NumberType<int32_t>(res));
-	else if (precision == eOperandType::Float)
-		return (new NumberType<float>(res));
-	else if (precision == eOperandType::Double)
-		return (new NumberType<double>(res));
-	else
-		throw WTF();
+	return (new NumberType<T>(res));
+
 }
 
 template <class T>
 IOperand const *NumberType<T>::operator+( IOperand const & rhs ) const {
 
-	double 	right 			= std::stof(rhs.toString());
+	double 	right 			= std::stod(rhs.toString());
 	double 	left 			= this->getValue();
 	eOperandType precision 	= this->getMinimumPrecision(rhs);
 
@@ -178,7 +167,7 @@ IOperand const *NumberType<T>::operator+( IOperand const & rhs ) const {
 template <class T>
 IOperand const *NumberType<T>::operator-( IOperand const & rhs ) const {
 
-	double 	right 			= std::stof(rhs.toString());
+	double 	right 			= std::stod(rhs.toString());
 	double 	left 			= this->getValue();
 	eOperandType precision 	= this->getMinimumPrecision(rhs);
 
@@ -189,7 +178,7 @@ IOperand const *NumberType<T>::operator-( IOperand const & rhs ) const {
 template <class T>
 IOperand const *NumberType<T>::operator*( IOperand const & rhs ) const {
 
-	double 	right 			= std::stof(rhs.toString());
+	double 	right 			= std::stod(rhs.toString());
 	double 	left 			= this->getValue();
 	eOperandType precision 	= this->getMinimumPrecision(rhs);
 
@@ -200,7 +189,7 @@ IOperand const *NumberType<T>::operator*( IOperand const & rhs ) const {
 template <class T>
 IOperand const *NumberType<T>::operator/( IOperand const & rhs ) const {
 
-	double 	right 			= std::stof(rhs.toString());
+	double 	right 			= std::stod(rhs.toString());
 	double 	left 			= this->getValue();
 	eOperandType precision 	= this->getMinimumPrecision(rhs);
 
@@ -211,7 +200,7 @@ IOperand const *NumberType<T>::operator/( IOperand const & rhs ) const {
 template <class T>
 IOperand const *NumberType<T>::operator%( IOperand const & rhs ) const {
 
-	double 	right 			= std::stof(rhs.toString());
+	double 	right 			= std::stod(rhs.toString());
 	double 	left 			= this->getValue();
 	eOperandType precision 	= this->getMinimumPrecision(rhs);
 

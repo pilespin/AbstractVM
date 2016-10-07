@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/15 17:44:48 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/01 21:51:07 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/07 20:59:04 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,13 @@ Factory::~Factory()						{}
 
 Factory::Factory(Factory const &src)	{	*this = src;	}
 
-// Factory	&Factory::operator=(Factory const &rhs) {
+Factory	&Factory::operator=(Factory const &rhs) {
 
-// 	if (this != &rhs)
-// 	{
-// 		this->_val = rhs._val;
-// 	}
-// 	return (*this);
-// }
+	if (this != &rhs)
+	{
+	}
+	return (*this);
+}
 
 std::ostream &operator<<(std::ostream &o, Factory &c) {
 	(void)c;
@@ -52,60 +51,60 @@ IOperand const *Factory::createOperand( eOperandType type, std::string const & v
 
 IOperand const *Factory::createInt8( std::string const & value ) const {
 
-	double val = std::atof(value.c_str());
+	long double val = std::strtold(value.c_str(), NULL);
 
 	if (val > INT8_MAX)
-		throw Overflow();
+		throw Error("Overflow");
 	else if (val < INT8_MIN)
-		throw Underflow();
+		throw Error("Underflow");
 
 	return (new NumberType<int8_t>(val));
 }
 
 IOperand const *Factory::createInt16( std::string const & value ) const {
 
-	double val = std::atof(value.c_str());
+	long double val = std::strtold(value.c_str(), NULL);
 
 	if (val > INT16_MAX)
-		throw Overflow();
+		throw Error("Overflow");
 	else if (val < INT16_MIN)
-		throw Underflow();
+		throw Error("Underflow");
 
 	return (new NumberType<int16_t>(val));
 }
 
 IOperand const *Factory::createInt32( std::string const & value ) const {
 
-	double val = std::atof(value.c_str());
+	long double val = std::strtold(value.c_str(), NULL);
 
 	if (val > INT32_MAX)
-		throw Overflow();
+		throw Error("Overflow");
 	else if (val < INT32_MIN)
-		throw Underflow();
+		throw Error("Underflow");
 
 	return (new NumberType<int32_t>(val));
 }
 
 IOperand const *Factory::createFloat( std::string const & value ) const {
 
-	double val = std::atof(value.c_str());
+	long double val = std::strtold(value.c_str(), NULL);
 
 	if (val > std::numeric_limits<float>::max())
-		throw Overflow();
+		throw Error("Overflow");
 	else if (val < std::numeric_limits<float>::lowest())
-		throw Underflow();
+		throw Error("Underflow");
 
 	return (new NumberType<float>(val));
 }
 
 IOperand const *Factory::createDouble( std::string const & value ) const {
 
-	double val = std::atof(value.c_str());
+	long double val = std::strtold(value.c_str(), NULL);
 
 	if (val > std::numeric_limits<double>::max())
-		throw Overflow();
+		throw Error("Overflow");
 	else if (val < std::numeric_limits<double>::lowest())
-		throw Underflow();
+		throw Error("Underflow");
 
 	return (new NumberType<double>(val));
 }

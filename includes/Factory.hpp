@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/15 17:44:48 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/04 17:11:29 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/07 20:58:04 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ public:
 	Factory();
 	~Factory();
 	Factory(Factory const &src);
-	// Factory &operator=(Factory const &rhs);
+	Factory &operator=(Factory const &rhs);
 
 	IOperand const *createOperand( eOperandType type, std::string const & value ) const;
 
