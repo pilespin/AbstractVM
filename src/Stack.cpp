@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/01 12:24:46 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/07 21:12:11 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/08 18:08:01 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	Stack::dump() {
 	}
 }
 
-void	Stack::assert(std::string value) {
+void	Stack::assert(std::string value, eOperandType type) {
 
 	if (this->list.empty())
 		throw Error("Assertion error");
@@ -116,7 +116,7 @@ void	Stack::assert(std::string value) {
 	double 	left 		= std::stod((*it)->toString());
 	double 	right 		= std::stod(value);
 
-	if (left != right)
+	if (left != right || (*it)->getType() != type)
 		throw Error("Assertion error");
 
 }

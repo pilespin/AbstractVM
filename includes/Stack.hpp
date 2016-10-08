@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/01 12:24:46 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/07 20:49:17 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/08 18:06:00 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ public:
 	void				push(IOperand const *);
 	void				pop();
 	void				dump();
-	void				assert(std::string value);
+	void				assert(std::string value, eOperandType type);
 	void				operate(eOperatorType op);
 	void				print();
 	void				exit();

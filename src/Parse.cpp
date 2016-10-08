@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/02 15:09:43 by pilespin          #+#    #+#             */
-/*   Updated: 2016/10/07 20:57:33 by pilespin         ###   ########.fr       */
+/*   Updated: 2016/10/08 18:10:35 by pilespin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,19 +202,13 @@ void	Parse::parseLine(std::string line) {
 
 void	Parse::execute() {
 
-	std::map<std::string, eOperandType> groupe;
-
-	groupe["int8"] = eOperandType::Int8;
-
-
-
 	if (!this->command.compare("push"))
 	{
 		IOperand const *one = factory.createOperand(stringToIOperandType(this->type), this->value);
 		this->stack->push(one);
 	}
 	else if (!this->command.compare("assert"))
-		this->stack->assert(this->value);
+		this->stack->assert(this->value, this->strToIoperand[this->type]);
 	else if (!this->command.compare("pop"))
 		this->stack->pop();
 	else if (!this->command.compare("dump"))
